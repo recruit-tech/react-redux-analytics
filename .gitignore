@@ -1,0 +1,12 @@
+# Transpiled source
+lib
+
+# Logs
+logs
+*.log
+
+# Dependencies
+node_modules
+
+#Visual Studio Code
+.vscode
