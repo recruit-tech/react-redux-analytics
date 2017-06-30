@@ -1,0 +1,8 @@
+{
+  "rules": {
+    //for temporary variables used in test files
+    "camelcase":"off",
+    //to explicitly declare undefined values
+    "no-undefined": "off"
+  }
+}
