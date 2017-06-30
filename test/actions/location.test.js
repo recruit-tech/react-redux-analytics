@@ -2,52 +2,91 @@ import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import { pushLocation, popLocation, replaceLocation,
   LOCATION_PUSH, LOCATION_POP, LOCATION_REPLACE,
- } from '../../src'
-import { top } from '../_data/location'
-import { prop10_12 } from '../_data/mixins'
-import { propSet1 } from '../_data/variables'
+ } from '../../src/actions'
 
 describe('pushLocation', () => {
-  it('push to top', () => {
-    const action = pushLocation(top)
+  it('default', () => {
+    const action = pushLocation({
+      pathname: '/',
+      search: '',
+      hash: '',
+    })
     expect(action).to.deep.equal({
       type: LOCATION_PUSH,
       payload: {
-        location: top,
+        location: {
+          pathname: '/',
+          search: '',
+          hash: '',
+        },
         variables: {},
         inherits: false,
       },
     })
   })
   it('with inherits = true', () => {
-    const action = pushLocation(top, true)
+    const action = pushLocation({
+      pathname: '/',
+      search: '',
+      hash: '',
+    }, true)
     expect(action).to.deep.equal({
       type: LOCATION_PUSH,
       payload: {
-        location: top,
+        location: {
+          pathname: '/',
+          search: '',
+          hash: '',
+        },
         variables: {},
         inherits: true,
       },
     })
   })
   it('with inherits = array', () => {
-    const action = pushLocation(top, prop10_12)
+    const action = pushLocation({
+      pathname: '/',
+      search: '',
+      hash: '',
+    }, ['prop10', 'prop11', 'prop12'])
     expect(action).to.deep.equal({
       type: LOCATION_PUSH,
       payload: {
-        location: top,
+        location: {
+          pathname: '/',
+          search: '',
+          hash: '',
+        },
         variables: {},
-        inherits: prop10_12,
+        inherits: ['prop10', 'prop11', 'prop12'],
       },
     })
   })
   it('with variables', () => {
-    const action = pushLocation(top, false, propSet1)
+    const action = pushLocation({
+      pathname: '/',
+      search: '',
+      hash: '',
+    }, false, {
+      prop10: 'prop10 from topPageProps',
+      prop11: 'prop11 from topPageProps',
+      prop20: 'prop20 from topPageProps',
+      prop30: 'prop30 from topPageProps',
+    })
     expect(action).to.deep.equal({
       type: LOCATION_PUSH,
       payload: {
-        location: top,
-        variables: propSet1,
+        location: {
+          pathname: '/',
+          search: '',
+          hash: '',
+        },
+        variables: {
+          prop10: 'prop10 from topPageProps',
+          prop11: 'prop11 from topPageProps',
+          prop20: 'prop20 from topPageProps',
+          prop30: 'prop30 from topPageProps',
+        },
         inherits: false,
       },
     })
@@ -66,46 +105,88 @@ describe('popLocation', () => {
 })
 
 describe('replaceLocation', () => {
-  it('replace to top', () => {
-    const action = replaceLocation(top)
+  it('default', () => {
+    const action = replaceLocation({
+      pathname: '/',
+      search: '',
+      hash: '',
+    })
     expect(action).to.deep.equal({
       type: LOCATION_REPLACE,
       payload: {
-        location: top,
+        location: {
+          pathname: '/',
+          search: '',
+          hash: '',
+        },
         variables: {},
         inherits: false,
       },
     })
   })
   it('with inherits = true', () => {
-    const action = replaceLocation(top, true)
+    const action = replaceLocation({
+      pathname: '/',
+      search: '',
+      hash: '',
+    }, true)
     expect(action).to.deep.equal({
       type: LOCATION_REPLACE,
       payload: {
-        location: top,
+        location: {
+          pathname: '/',
+          search: '',
+          hash: '',
+        },
         variables: {},
         inherits: true,
       },
     })
   })
   it('with inherits = array', () => {
-    const action = replaceLocation(top, prop10_12)
+    const action = replaceLocation({
+      pathname: '/',
+      search: '',
+      hash: '',
+    }, ['prop10', 'prop11', 'prop12'])
     expect(action).to.deep.equal({
       type: LOCATION_REPLACE,
       payload: {
-        location: top,
+        location: {
+          pathname: '/',
+          search: '',
+          hash: '',
+        },
         variables: {},
-        inherits: prop10_12,
+        inherits: ['prop10', 'prop11', 'prop12'],
       },
     })
   })
   it('with variables', () => {
-    const action = replaceLocation(top, false, propSet1)
+    const action = replaceLocation({
+      pathname: '/',
+      search: '',
+      hash: '',
+    }, false, {
+      prop10: 'prop10 from topPageProps',
+      prop11: 'prop11 from topPageProps',
+      prop20: 'prop20 from topPageProps',
+      prop30: 'prop30 from topPageProps',
+    })
     expect(action).to.deep.equal({
       type: LOCATION_REPLACE,
       payload: {
-        location: top,
-        variables: propSet1,
+        location: {
+          pathname: '/',
+          search: '',
+          hash: '',
+        },
+        variables: {
+          prop10: 'prop10 from topPageProps',
+          prop11: 'prop11 from topPageProps',
+          prop20: 'prop20 from topPageProps',
+          prop30: 'prop30 from topPageProps',
+        },
         inherits: false,
       },
     })

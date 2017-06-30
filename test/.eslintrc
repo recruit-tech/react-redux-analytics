@@ -3,6 +3,8 @@
     //for temporary variables used in test files
     "camelcase":"off",
     //to explicitly declare undefined values
-    "no-undefined": "off"
+    "no-undefined": "off",
+    //to use rewire js (for reflection)
+    "no-underscore-dangle": "off"
   }
 }

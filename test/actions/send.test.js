@@ -2,113 +2,170 @@ import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import { sendPageView, sendEvent, fallbackPageView,
   SEND_PAGE_VIEW, SEND_EVENT, FALLBACK_PAGEVIEW,
- } from '../../src'
-import { top } from '../_data/location'
-import { prop10_12, prop10and30 } from '../_data/mixins'
-import { topPageVar, eventSet1 } from '../_data/variables'
+ } from '../../src/actions'
 
 describe('sendPageView', () => {
-  it('top page', () => {
-    const action = sendPageView(topPageVar)
+  it('default', () => {
+    const action = sendPageView({
+      pageName: 'topPage',
+    })
     expect(action).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
         location: undefined,
-        variables: topPageVar,
+        variables: {
+          pageName: 'topPage',
+        },
         mixins: [],
       },
     })
   })
 
   it('with mixins = array', () => {
-    const action = sendPageView(topPageVar, prop10_12)
+    const action = sendPageView({
+      pageName: 'topPage',
+    }, ['prop10', 'prop11', 'prop12'])
     expect(action).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
         location: undefined,
-        variables: topPageVar,
-        mixins: prop10_12,
+        variables: {
+          pageName: 'topPage',
+        },
+        mixins: ['prop10', 'prop11', 'prop12'],
       },
     })
   })
 
   it('with mixins = true', () => {
-    const action = sendPageView(topPageVar, true)
+    const action = sendPageView({
+      pageName: 'topPage',
+    }, true)
     expect(action).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
         location: undefined,
-        variables: topPageVar,
+        variables: {
+          pageName: 'topPage',
+        },
         mixins: true,
       },
     })
   })
 
   it('with mixins = false', () => {
-    const action = sendPageView(topPageVar, false)
+    const action = sendPageView({
+      pageName: 'topPage',
+    }, false)
     expect(action).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
         location: undefined,
-        variables: topPageVar,
+        variables: {
+          pageName: 'topPage',
+        },
         mixins: false,
       },
     })
   })
 
   it('with location = top', () => {
-    const action = sendPageView(topPageVar, prop10_12, top)
+    const action = sendPageView({
+      pageName: 'topPage',
+    }, ['prop10', 'prop11', 'prop12'], {
+      pathname: '/',
+      search: '',
+      hash: '',
+    })
     expect(action).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
-        location: top,
-        variables: topPageVar,
-        mixins: prop10_12,
+        location: {
+          pathname: '/',
+          search: '',
+          hash: '',
+        },
+        variables: {
+          pageName: 'topPage',
+        },
+        mixins: ['prop10', 'prop11', 'prop12'],
       },
     })
   })
 })
 
 describe('sendEvent', () => {
-  it('event1', () => {
-    const action = sendEvent(eventSet1)
+  it('default', () => {
+    const action = sendEvent({
+      events: ['event1'],
+      prop20: 'prop20 from event1Vars',
+      prop21: 'prop21 from event1Vars',
+    })
     expect(action).to.deep.equal({
       type: SEND_EVENT,
       payload: {
-        variables: eventSet1,
+        variables: {
+          events: ['event1'],
+          prop20: 'prop20 from event1Vars',
+          prop21: 'prop21 from event1Vars',
+        },
         mixins: [],
       },
     })
   })
 
   it('with mixins = array', () => {
-    const action = sendEvent(eventSet1, prop10and30)
+    const action = sendEvent({
+      events: ['event1'],
+      prop20: 'prop20 from event1Vars',
+      prop21: 'prop21 from event1Vars',
+    }, ['prop10', 'prop30'])
     expect(action).to.deep.equal({
       type: SEND_EVENT,
       payload: {
-        variables: eventSet1,
-        mixins: prop10and30,
+        variables: {
+          events: ['event1'],
+          prop20: 'prop20 from event1Vars',
+          prop21: 'prop21 from event1Vars',
+        },
+        mixins: ['prop10', 'prop30'],
       },
     })
   })
 
   it('with mixins = true', () => {
-    const action = sendEvent(eventSet1, true)
+    const action = sendEvent({
+      events: ['event1'],
+      prop20: 'prop20 from event1Vars',
+      prop21: 'prop21 from event1Vars',
+    }, true)
     expect(action).to.deep.equal({
       type: SEND_EVENT,
       payload: {
-        variables: eventSet1,
+        variables: {
+          events: ['event1'],
+          prop20: 'prop20 from event1Vars',
+          prop21: 'prop21 from event1Vars',
+        },
         mixins: true,
       },
     })
   })
 
   it('with mixins = false', () => {
-    const action = sendEvent(eventSet1, false)
+    const action = sendEvent({
+      events: ['event1'],
+      prop20: 'prop20 from event1Vars',
+      prop21: 'prop21 from event1Vars',
+    }, false)
     expect(action).to.deep.equal({
       type: SEND_EVENT,
       payload: {
-        variables: eventSet1,
+        variables: {
+          events: ['event1'],
+          prop20: 'prop20 from event1Vars',
+          prop21: 'prop21 from event1Vars',
+        },
         mixins: false,
       },
     })
@@ -116,13 +173,20 @@ describe('sendEvent', () => {
 })
 
 describe('fallbackPageView', () => {
-  it('news', () => {
-    const action = sendEvent(eventSet1, false)
+  it('default', () => {
+    const action = fallbackPageView({
+      pathname: '/error',
+      search: '',
+      hash: '',
+    })
     expect(action).to.deep.equal({
-      type: SEND_EVENT,
+      type: FALLBACK_PAGEVIEW,
       payload: {
-        variables: eventSet1,
-        mixins: false,
+        location: {
+          pathname: '/error',
+          search: '',
+          hash: '',
+        },
       },
     })
   })

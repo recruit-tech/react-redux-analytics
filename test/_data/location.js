@@ -10,3 +10,9 @@ export const news = {
   search: '',
   hash: '',
 }
+
+export const error = {
+  pathname: '/error',
+  search: '',
+  hash: '',
+}
