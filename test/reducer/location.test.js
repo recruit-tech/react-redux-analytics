@@ -81,24 +81,20 @@ describe('pushLocation', () => {
       search: '',
       hash: '',
     })
-    expect(reducer(state, action)).to.deep.equal(
-      {
-        global: {
-          variables: {},
-        },
-        page: {
-          location: {
-            pathname: '/',
-            search: '',
-            hash: '',
-          },
-          variables: {},
-          lastPageViewSent: null,
-        },
-        prevPages: [],
-        initialState: false,
-      }
-    )
+    const state2 = reducer(state, action)
+    expect(state2.page).to.deep.equal({
+      location: {
+        pathname: '/',
+        search: '',
+        hash: '',
+      },
+      variables: {},
+      lastPageViewSent: null,
+    })
+    // confirm no side-effect
+    expect(state2.initialState).to.deep.equal(false)
+    expect(state2.prevPages).to.deep.equal(state.prevPages)
+    expect(state2.global).to.deep.equal(state.global)
   })
 
   it('with variables', () => {
@@ -212,24 +208,20 @@ describe('replaceLocation', () => {
       search: '',
       hash: '',
     })
-    expect(reducer(state, action)).to.deep.equal(
-      {
-        global: {
-          variables: {},
-        },
-        page: {
-          location: {
-            pathname: '/',
-            search: '',
-            hash: '',
-          },
-          variables: {},
-          lastPageViewSent: null,
-        },
-        prevPages: [],
-        initialState: false,
-      }
-    )
+    const state2 = reducer(state, action)
+    expect(state2.page).to.deep.equal({
+      location: {
+        pathname: '/',
+        search: '',
+        hash: '',
+      },
+      variables: {},
+      lastPageViewSent: null,
+    })
+    // confirm no side-effect
+    expect(state2.initialState).to.deep.equal(false)
+    expect(state2.prevPages).to.deep.equal(state.prevPages)
+    expect(state2.global).to.deep.equal(state.global)
   })
 
   it('with variables', () => {

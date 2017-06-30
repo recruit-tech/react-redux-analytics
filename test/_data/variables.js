@@ -18,9 +18,11 @@ export const newsPageProps = {
   prop32: 'prop32 from newsPageProps',
 }
 
-export const globalProps1 = {
-  prop30: 'prop30 from globalProp1',
-  prop31: 'prop31 from globalProp1',
+export const globalProps = {
+  prop30: 'prop30 from globalProps',
+  prop31: 'prop31 from globalProps',
+  prop40: 'prop40 from globalProps',
+  prop41: 'prop41 from globalProps',
 }
 
 export const pageProps1 = {
