@@ -11,6 +11,12 @@ export const news = {
   hash: '',
 }
 
+export const newsLatest = {
+  pathname: '/news/latest',
+  search: '',
+  hash: '',
+}
+
 export const error = {
   pathname: '/error',
   search: '',

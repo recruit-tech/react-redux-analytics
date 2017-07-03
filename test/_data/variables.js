@@ -1,3 +1,16 @@
+
+export const pageViewVariables = {
+  pageName: 'top',
+  prop10: 'prop10 from pageView payload',
+}
+
+export const eventVariables = {
+  events: ['event1'],
+  prop11: 'prop11 from event payload',
+}
+
+/*
+
 export const topPageViewProps = {
   pageName: 'topPage',
 }
@@ -35,3 +48,4 @@ export const event1Vars = {
   prop20: 'prop20 from event1Vars',
   prop21: 'prop21 from event1Vars',
 }
+*/

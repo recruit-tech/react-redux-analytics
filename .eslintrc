@@ -54,7 +54,7 @@
     "no-label-var": "error",
     "no-shadow": ["error", { "allow": ["cb", "next", "req", "res", "err", "error"] }],
     "no-undef-init": "error",
-    "no-undefined": "error",
+    "no-undefined": "off",
     "no-use-before-define": ["error", "nofunc"],
     "no-unused-expressions": ["error", { "allowShortCircuit": true }],
     "no-unused-vars": ["error", { "args": "none" }],

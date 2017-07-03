@@ -24,7 +24,7 @@ const initialState = {
       prop11: 'prop11 from topPageProps',
       prop15: 'prop15 from topPageProps',
     },
-    lastPageViewSent: null,
+    lastPageViewSent: undefined,
   },
   prevPages: [],
   initialState: false,

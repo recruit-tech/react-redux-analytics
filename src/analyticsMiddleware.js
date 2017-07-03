@@ -21,7 +21,7 @@ const composeMixinVariables = (reducerName, defaultMixins = [], mapStateToVariab
     return pick([...defaultMixins, ...mixins])(mergedVars)
   }
 
-  return {}
+  return pick([...defaultMixins])(mergedVars)
 }
 
 const composePageViewPayload = ({
@@ -65,7 +65,7 @@ export default ({
   eventMixins = [],
   mapStateToVariables = () => ({}), /* (store: Redux.Store) => Object */
   getLocationInStore =
-   () => ({ pathname: '/', search: '', hash: '' }), /* (store: Redux.Store) => Object */
+   () => undefined, /* (store: Redux.Store) => Object */
   reducerName = defaultReducerName,
 } = {}) => {
   const pageViewPayload = composePageViewPayload({ reducerName,

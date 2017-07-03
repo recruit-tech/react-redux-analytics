@@ -30,9 +30,9 @@ const INITIAL_STATE = {
     variables: {},
   },
   page: {
-    location: null,
+    location: undefined,
     variables: {},
-    lastPageViewSent: null,
+    lastPageViewSent: undefined,
   },
   prevPages: [],
   initialState: true,
@@ -87,7 +87,7 @@ export default handleActions({
       page: {
         variables: inherited,
         location,
-        lastPageViewSent: null,
+        lastPageViewSent: undefined,
       },
       initialState: false,
     }
@@ -99,7 +99,7 @@ export default handleActions({
       page: {
         variables: inherited,
         location,
-        lastPageViewSent: null,
+        lastPageViewSent: undefined,
       },
       initialState: false,
     }
