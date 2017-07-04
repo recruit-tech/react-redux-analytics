@@ -5,6 +5,9 @@
     //to explicitly declare undefined values
     "no-undefined": "off",
     //to use rewire js (for reflection)
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    //for convenience
+    "react/prefer-stateless-function": "off",
+    "react/jsx-boolean-value": "off"
   }
 }
