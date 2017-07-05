@@ -14,90 +14,92 @@ import MockComponent from '../_data/component'
 import { noStaticVariables, withStaticVariables } from '../_data/hocOutput'
 import { pageViewPayloadMixins } from '../_data/mixins'
 
+/* eslint-disable callback-return */
+const expectAction = (variables, mixins = []) => (action) => {
+  expect(action).to.deep.equal({
+    type: SEND_PAGE_VIEW,
+    payload: {
+      location: undefined,
+      variables,
+      mixins,
+    },
+  })
+}
+
+const mountComponent = ({ options, initialState, reducer, onDispatched, initialProps }) => {
+  let store
+  let Component
+  let wrapper
+  const promise = new Promise((resolve, reject) => {
+    store = createStore(reducer, initialState)
+    Component = sendAnalytics(options)(MockComponent)
+    wrapper = mount((<Component {...initialProps} />), {
+      context: { store: { ...store, dispatch: onDispatched(resolve, reject) } },
+    })
+  })
+  return { store, Component, wrapper, promise }
+}
+
+const resolveAfter = (ms) => new Promise((resolve, reject) => {
+  setTimeout(() => { resolve() }, ms)
+})
+const rejectAfter = (ms) => new Promise((resolve, reject) => {
+  setTimeout(() => { reject() }, ms)
+})
+
 describe('basic', () => {
   let options
   let initialState
-  let props
-  let callback
+  let initialProps
+  let onDispatched
+  let reducer
 
-  afterEach(() => {
-    const store = createStore((state) => ({ ...state }), initialState)
-    const Component = sendAnalytics(options)(MockComponent)
-    mount((<Component {...props} />), {
-      context: { store: { ...store, dispatch: callback } },
-    })
+  beforeEach(() => {
+    options = {}
+    reducer = (state) => ({ ...state })
+    initialState = mockState1
+    initialProps = topPageProps
+    onDispatched = undefined
   })
+
+  const expectCalled = (...args) => (resolve, reject) => (action) => {
+    expectAction(...args)(action)
+    resolve()
+  }
 
   it('without options', () => {
     options = {}
-    initialState = { ...mockState1 }
-    props = { ...topPageProps }
-    callback = (action) => {
-      expect(action).to.deep.equal({
-        type: SEND_PAGE_VIEW,
-        payload: {
-          location: undefined,
-          variables: noStaticVariables.noMapFunction['*,*'],
-          mixins: [],
-        },
-      })
-    }
+    onDispatched = expectCalled(noStaticVariables.noMapFunction['*,*'], [])
+    const { promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
+    return promise
   })
 
   it('with staticVariables', () => {
     options = {
       ...staticVariables,
     }
-    initialState = { ...mockState1 }
-    props = { ...topPageProps }
-    callback = (action) => {
-      expect(action).to.deep.equal({
-        type: SEND_PAGE_VIEW,
-        payload: {
-          location: undefined,
-          variables: withStaticVariables.noMapFunction['*,*'],
-          mixins: [],
-        },
-      })
-    }
+    onDispatched = expectCalled(withStaticVariables.noMapFunction['*,*'], [])
+    const { promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
+    return promise
   })
-
 
   it('with mapPropsToVariables', () => {
     options = {
       mapPropsToVariables: mapPropsToVariables2,
     }
-    initialState = { ...mockState1 }
-    props = { ...topPageProps }
-    callback = (action) => {
-      expect(action).to.deep.equal({
-        type: SEND_PAGE_VIEW,
-        payload: {
-          location: undefined,
-          variables: noStaticVariables.mapPropsToVariables2['props,state'],
-          mixins: [],
-        },
-      })
-    }
+    onDispatched = expectCalled(noStaticVariables.mapPropsToVariables2['props,state'], [])
+    const { promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
+    return promise
   })
 
   it('with staticVariables, mapPropsToVariables', () => {
     options = {
-      mapPropsToVariables: mapPropsToVariables2,
+      mapPropsToVariables: mapPropsToVariables1,
       ...staticVariables,
     }
-    initialState = { ...mockState1 }
-    props = { ...topPageProps }
-    callback = (action) => {
-      expect(action).to.deep.equal({
-        type: SEND_PAGE_VIEW,
-        payload: {
-          location: undefined,
-          variables: withStaticVariables.mapPropsToVariables2['props,state'],
-          mixins: [],
-        },
-      })
-    }
+    onDispatched = expectCalled(withStaticVariables.mapPropsToVariables1['props,state'], [])
+    const { promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
+    return promise
   })
 
   it('with staticVariables, mixins = true', () => {
@@ -105,187 +107,155 @@ describe('basic', () => {
       mixins: true,
       ...staticVariables,
     }
-    initialState = { ...mockState1 }
-    props = { ...topPageProps }
-    callback = (action) => {
-      expect(action).to.deep.equal({
-        type: SEND_PAGE_VIEW,
-        payload: {
-          location: undefined,
-          variables: withStaticVariables.noMapFunction['*,*'],
-          mixins: true,
-        },
-      })
-    }
+    onDispatched = expectCalled(withStaticVariables.noMapFunction['*,*'], true)
+    const { promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
+    return promise
   })
 
-  it('with mapPropsToVariables, mixins = false', () => {
+  it('with mapPropsToVariables, state = {} , mixins = false', () => {
     options = {
       mapPropsToVariables: mapPropsToVariables2,
       mixins: false,
     }
     initialState = { }
-    props = { ...topPageProps }
-    callback = (action) => {
-      expect(action).to.deep.equal({
-        type: SEND_PAGE_VIEW,
-        payload: {
-          location: undefined,
-          variables: noStaticVariables.mapPropsToVariables2['props,'],
-          mixins: false,
-        },
-      })
-    }
+    onDispatched = expectCalled(noStaticVariables.mapPropsToVariables2['props,'], false)
+    const { promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
+    return promise
   })
 
-  it('with staticVariables, mapPropsToVariables, mixins = array', () => {
+  it('with staticVariables, mapPropsToVariables, props = {}, mixins = array', () => {
     options = {
       mapPropsToVariables: mapPropsToVariables2,
       mixins: pageViewPayloadMixins,
       ...staticVariables,
     }
-    initialState = { ...mockState1 }
-    props = { }
-    callback = (action) => {
-      expect(action).to.deep.equal({
-        type: SEND_PAGE_VIEW,
-        payload: {
-          location: undefined,
-          variables: withStaticVariables.mapPropsToVariables2[',state'],
-          mixins: pageViewPayloadMixins,
-        },
-      })
-    }
+    initialProps = { }
+    onDispatched = expectCalled(withStaticVariables.mapPropsToVariables2[',state'], pageViewPayloadMixins)
+    const { promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
+    return promise
   })
 })
 
-
 describe('onDataReady', () => {
-  it('onDataReady=true', () => {
-    let dispatched = false
-    const callback = (action) => {
-      expect(action).to.deep.equal({
-        type: SEND_PAGE_VIEW,
-        payload: {
-          location: undefined,
-          variables: withStaticVariables.noMapFunction['*,*'],
-          mixins: [],
-        },
-      })
-      dispatched = true
-    }
-    const store = createStore((state) => ({ ...state }), mockState1)
-    const Component = sendAnalytics({
+  let dispatched
+  let options
+  let reducer
+  let initialState
+  let initialProps
+  let onDispatched
+
+  beforeEach(() => {
+    dispatched = false
+    options = {}
+    reducer = (state) => ({ ...state })
+    initialState = {}
+    initialProps = {}
+  })
+
+  const expectCalled = (...args) => (resolve, reject) => (action) => {
+    dispatched = true
+    expectAction(...args)(action)
+    resolve()
+  }
+
+  const expectNotCalled = (resolve, reject) => (action) => {
+    // confirm sendPageView is not sent
+    dispatched = true
+    expect.fail('action should not be dispatched')
+    reject()
+  }
+
+  it('true', () => {
+    options = {
       onDataReady: true,
       ...staticVariables,
-    })(MockComponent)
-    mount((<Component {...topPageProps} />), {
-      context: { store: { ...store, dispatch: callback } },
-    })
+    }
+    initialState = mockState1
+    initialProps = topPageProps
+    onDispatched = expectCalled(withStaticVariables.noMapFunction['*,*'], [])
+    const { promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
     // confirm sendPageView is sent immediately
     expect(dispatched).to.equal(true)
+    return promise
   })
 
-  it('onDataReady=false', (done) => {
-    let dispatched = false
-    const callback = (action) => {
-      // confirm sendPageView is not sent
-      dispatched = true
-      expect.fail('action should not be dispatched')
-    }
-    const store = createStore((state) => ({ ...state }), mockState1)
-    const Component = sendAnalytics({
+  it('false', () => {
+    options = {
       onDataReady: false,
       ...staticVariables,
-    })(MockComponent)
-    mount((<Component {...topPageProps} />), {
-      context: { store: { ...store, dispatch: callback } },
-    })
+    }
+    initialState = mockState1
+    initialProps = topPageProps
+    onDispatched = expectNotCalled
+    const { promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
     // confirm sendPageView is not dispatched yet
     expect(dispatched).to.equal(false)
-    setTimeout(() => { done() }, 800)
-  }).timeout(1000)
-
-  it('onDataReady=()=>true', () => {
-    let dispatched = false
-    const callback = (action) => {
-      expect(action).to.deep.equal({
-        type: SEND_PAGE_VIEW,
-        payload: {
-          location: undefined,
-          variables: withStaticVariables.noMapFunction['*,*'],
-          mixins: [],
-        },
-      })
-      dispatched = true
-    }
-    const store = createStore((state) => ({ ...state }), mockState1)
-    const Component = sendAnalytics({
-      onDataReady: () => true,
-      ...staticVariables,
-    })(MockComponent)
-    mount((<Component {...topPageProps} />), {
-      context: { store: { ...store, dispatch: callback } },
-    })
-    // confirm sendPageView is sent immediately
-    expect(dispatched).to.equal(true)
+    return Promise.race([promise, resolveAfter(800), rejectAfter(1000)])
   })
 
-  it('onDataReady=(props)=>props.ready', () => {
-    let dispatched = false
-    const callback = (action) => {
-      expect(action).to.deep.equal({
-        type: SEND_PAGE_VIEW,
-        payload: {
-          location: undefined,
-          // confirm variables are mapped from changed props (topPageProps)
-          variables: withStaticVariables.mapPropsToVariables1['props,'],
-          mixins: [],
-        },
-      })
-      dispatched = true
-    }
-    const store = createStore((state) => ({ ...state }), {})
-    const Component = sendAnalytics({
-      onDataReady: (props) => props.ready,
-      ...staticVariables,
+  it('()=>true', () => {
+    options = {
+      onDataReady: () => true,
       mapPropsToVariables: mapPropsToVariables1,
-    })(MockComponent)
-    const wrapper = mount((<Component {...newsPageProps} ready={false} />), {
-      context: { store: { ...store, dispatch: callback } },
-    })
+      ...staticVariables,
+    }
+    initialState = mockState1
+    initialProps = topPageProps
+    onDispatched = expectCalled(withStaticVariables.mapPropsToVariables1['props,state'], [])
+    const { promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
+    // confirm sendPageView is sent immediately
+    expect(dispatched).to.equal(true)
+    return promise
+  })
+
+  it('()=>false', () => {
+    options = {
+      onDataReady: () => false,
+      ...staticVariables,
+    }
+    initialState = mockState1
+    initialProps = topPageProps
+    onDispatched = expectNotCalled
+    const { wrapper, promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
+    // confirm sendPageView is not dispatched yet
+    expect(dispatched).to.equal(false)
+    wrapper.setProps(topPageProps)
+    // confirm sendPageView is not dispatched even after prop changed
+    expect(dispatched).to.equal(false)
+    return Promise.race([promise, resolveAfter(800), rejectAfter(1000)])
+  })
+
+  it('(props)=>props.ready', () => {
+    options = {
+      onDataReady: (props) => props.ready,
+      mapPropsToVariables: mapPropsToVariables2,
+      ...staticVariables,
+    }
+    initialState = {}
+    initialProps = topPageProps
+    onDispatched = expectCalled(withStaticVariables.mapPropsToVariables2['props,'], [])
+    const { wrapper, promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
     // confirm sendPageView is not dispatched yet
     expect(dispatched).to.equal(false)
     wrapper.setProps({ ...topPageProps, ready: true })
     // confirm sendPageView is dispatched when props changed
     expect(dispatched).to.equal(true)
+    return promise
   })
 
-  it('onDataReady=(props,state)=>state.loaded', () => {
-    let dispatched = false
-    const callback = (action) => {
-      expect(action).to.deep.equal({
-        type: SEND_PAGE_VIEW,
-        payload: {
-          location: undefined,
-          // confirm variables are mapped from changed props & state (topPageProps, mockState1)
-          variables: withStaticVariables.mapPropsToVariables2['props,state'],
-          mixins: [],
-        },
-      })
-      dispatched = true
-    }
-    const store = createStore((state, action) =>
-     (action.type === 'END_LOAD' ? ({ ...mockState1, loaded: true }) : ({ ...state })),
-     { loaded: false })
-    const Component = sendAnalytics({
+  it('(props,state)=>state.loaded', () => {
+    options = {
       onDataReady: (props, state) => state.loaded,
       mapPropsToVariables: mapPropsToVariables2,
       ...staticVariables,
-    })(MockComponent)
-    const wrapper = mount((<Component />), {
-      context: { store: { ...store, dispatch: callback } },
-    })
+    }
+    initialState = { loaded: false }
+    initialProps = { }
+    reducer = (state, action) =>
+     (action.type === 'END_LOAD' ? ({ ...mockState1, loaded: true }) : ({ ...state }))
+    onDispatched = expectCalled(withStaticVariables.mapPropsToVariables2['props,state'], [])
+
+    const { store, wrapper, promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
     // confirm sendPageView is not dispatched yet
     expect(dispatched).to.equal(false)
 
@@ -303,163 +273,178 @@ describe('onDataReady', () => {
     expect(store.getState().loaded).to.equal(true)
     // confirm action is not yet dispatched because componentWillReceiveProps is not invoked
     expect(dispatched).to.equal(false)
-    wrapper.setProps({ ...topPageProps })
+    wrapper.setProps(topPageProps)
     // confirm sendPageView is finally dispatched when props is changed
     expect(dispatched).to.equal(true)
+    return promise
   })
 })
 
-describe('sendOnDidMount', () => {
+describe('sendPageViewOnDidMount', () => {
   let dispatched
+  let options
+  let reducer
+  let initialState
+  let initialProps
+  let onDispatched
 
   beforeEach(() => {
     dispatched = false
+    options = {}
+    reducer = (state) => ({ ...state })
+    initialState = {}
+    initialProps = {}
   })
 
-  const expectSuccess = (action) => {
-    expect(action).to.deep.equal({
-      type: SEND_PAGE_VIEW,
-      payload: {
-        location: undefined,
-        variables: withStaticVariables.noMapFunction['*,*'],
-        mixins: [],
-      },
-    })
+  const expectCalled = (...args) => (resolve, reject) => (action) => {
     dispatched = true
+    expectAction(...args)(action)
+    resolve()
   }
-  const expectFail = (action) => {
+
+  const expectNotCalled = (resolve, reject) => (action) => {
     // confirm sendPageView is not sent
     dispatched = true
     expect.fail('action should not be dispatched')
+    reject()
   }
 
-  it('sendOnDidMount=true', () => {
-    const store = createStore((state) => ({ ...state }), mockState1)
-    const Component = sendAnalytics({
+  it('true', () => {
+    initialState = mockState1
+    options = {
       sendPageViewOnDidMount: true,
+      mapPropsToVariables: mapPropsToVariables1,
       ...staticVariables,
-    })(MockComponent)
-    mount((<Component {...topPageProps} />), {
-      context: { store: { ...store, dispatch: expectSuccess } },
-    })
+    }
+    onDispatched = expectCalled(withStaticVariables.mapPropsToVariables1[',state'], [])
+    const { promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
     // confirm sendPageView is sent
     expect(dispatched).to.equal(true)
+    return promise
   })
 
-  it('sendOnDidMount=false', (done) => {
-    const store = createStore((state) => ({ ...state }), mockState1)
-    const Component = sendAnalytics({
+  it('false', () => {
+    options = {
       sendPageViewOnDidMount: false,
       ...staticVariables,
-    })(MockComponent)
-    mount((<Component {...topPageProps} />), {
-      context: { store: { ...store, dispatch: expectFail } },
-    })
+    }
+    onDispatched = expectNotCalled
+    const { wrapper, promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
     // confirm sendPageView is not dispatched yet
     expect(dispatched).to.equal(false)
-    setTimeout(() => { done() }, 800)
-  }).timeout(1000)
+    wrapper.setProps(topPageProps)
+    // confirm sendPageView is not dispatched even after prop changed
+    expect(dispatched).to.equal(false)
+    return Promise.race([promise, resolveAfter(800), rejectAfter(1000)])
+  })
 
-  it('sendOnDidMount=()=>true', () => {
-    const store = createStore((state) => ({ ...state }), mockState1)
-    const Component = sendAnalytics({
+  it('()=>true', () => {
+    initialState = mockState1
+    initialProps = topPageProps
+    options = {
       sendPageViewOnDidMount: () => true,
-      ...staticVariables,
-    })(MockComponent)
-    mount((<Component {...topPageProps} />), {
-      context: { store: { ...store, dispatch: expectSuccess } },
-    })
+      mapPropsToVariables: mapPropsToVariables1,
+    }
+    onDispatched = expectCalled(noStaticVariables.mapPropsToVariables1['props,state'], [])
+    const { promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
     // confirm sendPageView is sent
     expect(dispatched).to.equal(true)
+    return promise
   })
 
-  it('sendOnDidMount=()=>false', (done) => {
-    const store = createStore((state) => ({ ...state }), mockState1)
-    const Component = sendAnalytics({
-      sendPageViewOnDidMount: () => false,
+  it('()=>false', () => {
+    options = {
+      sendPageViewOnDidMount: false,
       ...staticVariables,
-    })(MockComponent)
-    mount((<Component {...topPageProps} />), {
-      context: { store: { ...store, dispatch: expectFail } },
-    })
+    }
+    onDispatched = expectNotCalled
+    const { wrapper, promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
     // confirm sendPageView is not dispatched yet
     expect(dispatched).to.equal(false)
-    setTimeout(() => { done() }, 800)
-  }).timeout(1000)
-
-  it('sendOnDidMount=(props)=>props.ready, ready = true on mount', () => {
-    const store = createStore((state) => ({ ...state }), {})
-    const Component = sendAnalytics({
-      sendPageViewOnDidMount: (props) => props.ready,
-      ...staticVariables,
-    })(MockComponent)
-    mount((<Component {...topPageProps} ready={true} />), {
-      context: { store: { ...store, dispatch: expectSuccess } },
-    })
-    // confirm sendPageView is sent immediately
-    expect(dispatched).to.equal(true)
+    wrapper.setProps(topPageProps)
+    // confirm sendPageView is not dispatched even after prop changed
+    expect(dispatched).to.equal(false)
+    return Promise.race([promise, resolveAfter(800), rejectAfter(1000)])
   })
 
-  it('sendOnDidMount=(props)=>props.ready, ready = false on mount', (done) => {
-    const store = createStore((state) => ({ ...state }), {})
-    const Component = sendAnalytics({
+  it('(props)=>props.ready, props.ready = true on mount', () => {
+    initialState = mockState1
+    initialProps = { ...topPageProps, ready: true }
+    options = {
       sendPageViewOnDidMount: (props) => props.ready,
+      mapPropsToVariables: mapPropsToVariables2,
+    }
+    onDispatched = expectCalled(noStaticVariables.mapPropsToVariables2['props,state'], [])
+    const { promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
+    // confirm sendPageView is sent
+    expect(dispatched).to.equal(true)
+    return promise
+  })
+
+  it('(props)=>props.ready, props.ready = false on mount', () => {
+    initialState = {}
+    initialProps = { ...topPageProps, ready: false }
+    options = {
+      sendPageViewOnDidMount: (props) => props.ready,
+      mapPropsToVariables: mapPropsToVariables2,
       ...staticVariables,
-    })(MockComponent)
-    const wrapper = mount((<Component {...topPageProps} ready={false} />), {
-      context: { store: { ...store, dispatch: expectFail } },
-    })
+    }
+    onDispatched = expectNotCalled
+    const { wrapper, promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
     // confirm sendPageView is not dispatched yet
     expect(dispatched).to.equal(false)
     wrapper.setProps({ ...topPageProps, ready: true })
     // confirm action is not dispatched even if props changed
     expect(dispatched).to.equal(false)
-    setTimeout(() => { done() }, 800)
-  }).timeout(1000)
-
-  it('sendOnDidMount=(props)=>props.ready, onDataReady=props.ready', () => {
-    const store = createStore((state) => ({ ...state }), {})
-    const Component = sendAnalytics({
-      sendPageViewOnDidMount: (props) => props.ready,
-      onDataReady: (props) => props.ready,
-      ...staticVariables,
-    })(MockComponent)
-    mount((<Component {...topPageProps} ready={true} />), {
-      context: { store: { ...store, dispatch: expectSuccess } },
-    })
-    // confirm sendPageView is sent immediately
-    expect(dispatched).to.equal(true)
+    return Promise.race([promise, resolveAfter(800), rejectAfter(1000)])
   })
 
-  it('sendOnDidMount=(props)=>props.ready, onDataReady=props.loaded', () => {
-    const store = createStore((state) => ({ ...state }), {})
-    const Component = sendAnalytics({
+  it('(props)=>props.ready, onDataReady=props.ready', () => {
+    initialState = {}
+    initialProps = { ...topPageProps, ready: true }
+    options = {
+      sendPageViewOnDidMount: (props) => props.ready,
+      onDataReady: (props) => props.ready,
+      mapPropsToVariables: mapPropsToVariables2,
+    }
+    onDispatched = expectCalled(noStaticVariables.mapPropsToVariables2['props,'], [])
+    const { promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
+    // confirm sendPageView is dispatched immediately
+    expect(dispatched).to.equal(true)
+    return promise
+  })
+
+  it('(props)=>props.ready, onDataReady=props.loaded, initialProps.loaded = false', () => {
+    initialState = {}
+    initialProps = { ready: true, loaded: false }
+    options = {
       sendPageViewOnDidMount: (props) => props.ready,
       onDataReady: (props) => props.loaded,
+      mapPropsToVariables: mapPropsToVariables2,
       ...staticVariables,
-    })(MockComponent)
-    const wrapper = mount((<Component {...topPageProps} ready={true} loaded={false} />), {
-      context: { store: { ...store, dispatch: expectSuccess } },
-    })
+    }
+    onDispatched = expectCalled(withStaticVariables.mapPropsToVariables2['props,'], [])
+    const { wrapper, promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
     // confirm sendPageView is not dispatched yet
     expect(dispatched).to.equal(false)
     wrapper.setProps({ ...topPageProps, ready: false, loaded: true })
     // confirm sendPageView is dispatched when props changed
     expect(dispatched).to.equal(true)
+    return promise
   })
 
-  it('sendOnDidMount=(props, state)=>state.loaded, initialState.loaded = true', () => {
-    const store = createStore((state, action) =>
-     (action.type === 'SET_LOADED' ? ({ ...mockState1, loaded: action.payload }) : ({ ...state })),
-     { loaded: true })
-    const Component = sendAnalytics({
+  it('(props, state)=>state.loaded, initialState.loaded = true', () => {
+    reducer = (state, action) => (action.type === 'SET_LOADED' ?
+      ({ ...mockState1, loaded: action.payload }) : ({ ...state }))
+    initialState = { loaded: true }
+    initialProps = {}
+    options = {
       sendPageViewOnDidMount: (props, state) => state.loaded,
       onDataReady: (props) => props.ready,
-      ...staticVariables,
-    })(MockComponent)
-    const wrapper = mount((<Component {...topPageProps} ready={false} />), {
-      context: { store: { ...store, dispatch: expectSuccess } },
-    })
+      mapPropsToVariables: mapPropsToVariables2,
+    }
+    onDispatched = expectCalled(noStaticVariables.mapPropsToVariables2['props,state'], [])
+    const { wrapper, store, promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
     // confirm sendPageView is not dispatched yet
     expect(dispatched).to.equal(false)
     store.dispatch({ type: 'SET_LOADED', payload: false })
@@ -468,20 +453,22 @@ describe('sendOnDidMount', () => {
     wrapper.setProps({ ...topPageProps, ready: true })
     // confirm sendPageView is dispatched when props changed
     expect(dispatched).to.equal(true)
+    return promise
   })
 
-  it('sendOnDidMount=(props, state)=>state.loaded, initialState.loaded = false', () => {
-    const store = createStore((state, action) =>
-     (action.type === 'SET_LOADED' ? ({ ...mockState1, loaded: action.payload }) : ({ ...state })),
-     { loaded: false })
-    const Component = sendAnalytics({
+  it('(props, state)=>state.loaded, initialState.loaded = false', () => {
+    reducer = (state, action) => (action.type === 'SET_LOADED' ?
+      ({ ...mockState1, loaded: action.payload }) : ({ ...state }))
+    initialState = { loaded: false }
+    initialProps = {}
+    options = {
       sendPageViewOnDidMount: (props, state) => state.loaded,
       onDataReady: (props) => props.ready,
-      ...staticVariables,
-    })(MockComponent)
-    const wrapper = mount((<Component {...topPageProps} ready={false} />), {
-      context: { store: { ...store, dispatch: expectFail } },
-    })
+      mapPropsToVariables: mapPropsToVariables2,
+    }
+    onDispatched = expectNotCalled
+    const { store, wrapper, promise } = mountComponent({ options, reducer, initialState, initialProps, onDispatched })
+
     // confirm sendPageView is not dispatched yet
     expect(dispatched).to.equal(false)
     store.dispatch({ type: 'SET_LOADED', payload: true })
@@ -490,5 +477,6 @@ describe('sendOnDidMount', () => {
     wrapper.setProps({ ...topPageProps, ready: true })
     // confirm sendPageView is not dispathed
     expect(dispatched).to.equal(false)
+    return Promise.race([promise, resolveAfter(800), rejectAfter(1000)])
   })
 })
