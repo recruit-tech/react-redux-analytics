@@ -17,7 +17,7 @@ export const LOCATION_REPLACE = ANALYTICS + '/location/replace'
 
 export const SEND_PAGE_VIEW = ANALYTICS + '/send/page-view'
 export const SEND_EVENT = ANALYTICS + '/send/event'
-export const NO_SEND_ANALYTICS = ANALYTICS + '/no-send-analytics'
+export const FALLBACK_PAGEVIEW = ANALYTICS + '/fallback-pageview'
 
 /**
  * Action creators
@@ -29,7 +29,7 @@ export const replaceLocation = createAction(LOCATION_REPLACE,
   (location, inherits = false, variables = {}) => ({ location, variables, inherits }))
 
 export const sendPageView = createAction(SEND_PAGE_VIEW,
- (variables = {}, mixins = [], location) => ({ location, variables, mixins }))
+ (variables = {}, mixins = [], location = null) => ({ location, variables, mixins }))
 export const sendEvent = createAction(SEND_EVENT,
  (variables = {}, mixins = []) => ({ variables, mixins }))
 
@@ -37,4 +37,4 @@ export const clearGlobalVariables = createAction(GLOBAL_VARIABLES_CLEAR, () => (
 export const updateGlobalVariables = createAction(GLOBAL_VARIABLES_UPDATE, (variables) => ({ variables }))
 export const clearPageVariables = createAction(PAGE_VARIABLES_CLEAR, () => ({}))
 export const updatePageVariables = createAction(PAGE_VARIABLES_UPDATE, (variables) => ({ variables }))
-export const noSendAnalyticsFound = createAction(NO_SEND_ANALYTICS, (location) => ({ location }))
+export const fallbackPageView = createAction(FALLBACK_PAGEVIEW, (location) => ({ location }))

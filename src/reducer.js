@@ -79,7 +79,7 @@ export default handleActions({
     },
   }),
   [LOCATION_PUSH]: (state, { payload: { location, variables = {}, inherits = false } }) => {
-    const prevPages = [state.page, ...state.prevPages].slice(0, MAX_LOCATION_STACK)
+    const prevPages = state.initialState ? [] : [state.page, ...state.prevPages].slice(0, MAX_LOCATION_STACK)
     const inherited = inheritVariables(variables, state.page, inherits)
     return {
       ...state,
@@ -116,8 +116,8 @@ export default handleActions({
       page,
     }
   },
-  [SEND_PAGE_VIEW]: (state, { payload: { location, variables = {}, update = {} } }) => {
-    const { variables: updateVariables = {}, location: updateLocation } = update
+  [SEND_PAGE_VIEW]: (state, { payload: { location = null, variables = {}, update = {} } }) => {
+    const { variables: updateVariables = {}, location: updateLocation = null } = update
     return {
       ...state,
       page: {

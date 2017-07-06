@@ -1,5 +1,5 @@
 {
-  "extends": "airbnb",
+  "extends": "eslint-config-airbnb",
 
   "parserOptions": {
     "ecmaVersion": 6,
@@ -30,7 +30,6 @@
 
   "settings": {
     "import/resolver": {
-      "babel-module": {}
     }
   },
 
