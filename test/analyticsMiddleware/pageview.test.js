@@ -33,10 +33,10 @@ describe('without options', () => {
     expect(action2).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
-        location: undefined,
+        location: null,
         variables: withPageViewPayload['[],[],*'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       },
@@ -49,10 +49,10 @@ describe('without options', () => {
     expect(action2).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
-        location: undefined,
+        location: null,
         variables: withPageViewPayload['[],pageViewPayloadMixins,'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       },
@@ -85,7 +85,7 @@ describe('without options', () => {
         location: newsLatest,
         variables: withPageViewPayload['*,false,*'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       },
@@ -115,10 +115,10 @@ describe('with option pageViewMixins = array', () => {
     expect(action2).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
-        location: undefined,
+        location: null,
         variables: withPageViewPayload['pageViewMixins,[],'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       },
@@ -131,10 +131,10 @@ describe('with option pageViewMixins = array', () => {
     expect(action2).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
-        location: undefined,
+        location: null,
         variables: withPageViewPayload['pageViewMixins,pageViewPayloadMixins,'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       },
@@ -147,10 +147,10 @@ describe('with option pageViewMixins = array', () => {
     expect(action2).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
-        location: undefined,
+        location: null,
         variables: withPageViewPayload['*,false,*'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       },
@@ -167,7 +167,7 @@ describe('with option pageViewMixins = array', () => {
         location: newsLatest,
         variables: withPageViewPayload['*,true,'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       },
@@ -196,10 +196,10 @@ describe('with option mapStateToVariables', () => {
     expect(action2).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
-        location: undefined,
+        location: null,
         variables: withPageViewPayload['[],[],*'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       },
@@ -212,10 +212,10 @@ describe('with option mapStateToVariables', () => {
     expect(action2).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
-        location: undefined,
+        location: null,
         variables: withPageViewPayload['[],pageViewPayloadMixins,mapStateToVariables'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       },
@@ -228,10 +228,10 @@ describe('with option mapStateToVariables', () => {
     expect(action2).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
-        location: undefined,
+        location: null,
         variables: withPageViewPayload['*,false,*'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       },
@@ -278,10 +278,10 @@ describe('with option pageViewMixins = array, mapStateToVariables', () => {
     expect(action2).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
-        location: undefined,
+        location: null,
         variables: withPageViewPayload['pageViewMixins,[],mapStateToVariables'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       },
@@ -294,10 +294,10 @@ describe('with option pageViewMixins = array, mapStateToVariables', () => {
     expect(action2).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
-        location: undefined,
+        location: null,
         variables: withPageViewPayload['pageViewMixins,pageViewPayloadMixins,mapStateToVariables'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       },
@@ -310,10 +310,10 @@ describe('with option pageViewMixins = array, mapStateToVariables', () => {
     expect(action2).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
-        location: undefined,
+        location: null,
         variables: withPageViewPayload['*,false,*'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       },
@@ -364,7 +364,7 @@ describe('with getLocationInStore', () => {
         location: news,
         variables: withPageViewPayload['*,false,*'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       },
@@ -397,7 +397,7 @@ describe('with getLocationInStore', () => {
         location: newsLatest,
         variables: withPageViewPayload['*,false,*'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       },
@@ -431,7 +431,7 @@ describe('with getLocationInStore', () => {
         location: newsLatest,
         variables: withPageViewPayload['*,false,*'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       },

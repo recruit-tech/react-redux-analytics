@@ -12,7 +12,7 @@ describe('sendPageView', () => {
     expect(action).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
-        location: undefined,
+        location: null,
         variables: {
           pageName: 'topPage',
         },
@@ -28,7 +28,7 @@ describe('sendPageView', () => {
     expect(action).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
-        location: undefined,
+        location: null,
         variables: {
           pageName: 'topPage',
         },
@@ -44,7 +44,7 @@ describe('sendPageView', () => {
     expect(action).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
-        location: undefined,
+        location: null,
         variables: {
           pageName: 'topPage',
         },
@@ -60,7 +60,7 @@ describe('sendPageView', () => {
     expect(action).to.deep.equal({
       type: SEND_PAGE_VIEW,
       payload: {
-        location: undefined,
+        location: null,
         variables: {
           pageName: 'topPage',
         },

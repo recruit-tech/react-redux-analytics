@@ -19,7 +19,7 @@ const expectAction = (variables, mixins = []) => (action) => {
   expect(action).to.deep.equal({
     type: SEND_PAGE_VIEW,
     payload: {
-      location: undefined,
+      location: null,
       variables,
       mixins,
     },
@@ -59,7 +59,7 @@ describe('basic', () => {
     reducer = (state) => ({ ...state })
     initialState = mockState1
     initialProps = topPageProps
-    onDispatched = undefined
+    onDispatched = () => { expect.fail('onDispatched is not configured') }
   })
 
   const expectCalled = (...args) => (resolve, reject) => (action) => {

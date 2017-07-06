@@ -117,18 +117,18 @@ describe('composePageViewPayload', () => {
         reducerName,
         defaultMixins: [],
         mapStateToVariables: () => ({}),
-        getLocationInStore: () => undefined,
+        getLocationInStore: () => null,
       })
     })
-    it('only variables, page.location = undefined', () => {
+    it('only variables, page.location = null', () => {
       const payload = composePayload({
         variables: pageViewVariables,
       }, mockState1)
       expect(payload).deep.equal({
-        location: undefined,
+        location: null,
         variables: withPageViewPayload['[],[],*'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       })
@@ -141,7 +141,7 @@ describe('composePageViewPayload', () => {
         location: newsLatest,
         variables: withPageViewPayload['[],[],*'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       })
@@ -213,7 +213,7 @@ describe('composePageViewPayload', () => {
         reducerName,
         defaultMixins: pageViewMixins,
         mapStateToVariables: () => ({}),
-        getLocationInStore: () => undefined,
+        getLocationInStore: () => null,
       })
     })
     it('with mixins = []', () => {
@@ -284,7 +284,7 @@ describe('composePageViewPayload', () => {
         reducerName,
         defaultMixins: pageViewMixins,
         mapStateToVariables,
-        getLocationInStore: () => undefined,
+        getLocationInStore: () => null,
       })
     })
     it('with mixins = []', () => {
@@ -359,7 +359,7 @@ describe('composePageViewPayload', () => {
         getLocationInStore: (state) => (state.routing.locationBeforeTransitions),
       })
     })
-    it('only variables, page.location = undefined', () => {
+    it('only variables, page.location = null', () => {
       const payload = composePayload({
         variables: pageViewVariables,
       }, mockState1)
@@ -367,7 +367,7 @@ describe('composePageViewPayload', () => {
         location: news,
         variables: withPageViewPayload['[],[],*'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       })
@@ -380,7 +380,7 @@ describe('composePageViewPayload', () => {
         location: newsLatest,
         variables: withPageViewPayload['[],[],*'],
         update: {
-          location: undefined,
+          location: null,
           variables: pageViewVariables,
         },
       })

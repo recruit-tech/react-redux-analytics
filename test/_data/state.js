@@ -23,7 +23,7 @@ export const mockState1 = {
       },
     },
     page: {
-      location: undefined,
+      location: null,
       variables: {
         prop10: 'prop10 from topPageProps',
         prop11: 'prop11 from topPageProps',
@@ -31,7 +31,7 @@ export const mockState1 = {
         prop40: 'prop40 from topPageProps',
         prop41: 'prop41 from topPageProps',
       },
-      lastPageViewSent: undefined,
+      lastPageViewSent: null,
     },
     prevPages: [],
     initialState: false,

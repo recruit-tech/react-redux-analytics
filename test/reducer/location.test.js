@@ -8,9 +8,9 @@ const initialState = {
     variables: {},
   },
   page: {
-    location: undefined,
+    location: null,
     variables: {},
-    lastPageViewSent: undefined,
+    lastPageViewSent: null,
   },
   prevPages: [],
   initialState: true,
@@ -32,7 +32,7 @@ const secondState = {
       prop11: 'prop11 from topPageProps',
       prop15: 'prop15 from topPageProps',
     },
-    lastPageViewSent: undefined,
+    lastPageViewSent: null,
   },
   prevPages: [],
   initialState: false,
@@ -55,7 +55,7 @@ const thirdState = {
       prop11: 'prop11 from newsPageProps',
       prop12: 'prop12 from newsPageProps',
     },
-    lastPageViewSent: undefined,
+    lastPageViewSent: null,
   },
   prevPages: [{
     location: {
@@ -68,7 +68,7 @@ const thirdState = {
       prop11: 'prop11 from topPageProps',
       prop15: 'prop15 from topPageProps',
     },
-    lastPageViewSent: undefined,
+    lastPageViewSent: null,
   }],
   initialState: false,
 }
@@ -89,7 +89,7 @@ describe('pushLocation', () => {
         hash: '',
       },
       variables: {},
-      lastPageViewSent: undefined,
+      lastPageViewSent: null,
     })
     // confirm no side-effect
     expect(state2.initialState).to.deep.equal(false)
@@ -136,7 +136,7 @@ describe('pushLocation', () => {
         prop12: 'prop12 from newsPageProps',
         prop15: 'prop15 from topPageProps',
       },
-      lastPageViewSent: undefined,
+      lastPageViewSent: null,
     })
   })
 
@@ -192,7 +192,7 @@ describe('pushLocation', () => {
         prop11: 'prop11 from newsPageProps',
         prop12: 'prop12 from newsPageProps',
       },
-      lastPageViewSent: undefined,
+      lastPageViewSent: null,
     })
     expect(state3.prevPages[0]).to.deep.equal(state2.page)
     expect(state3.prevPages[1]).to.deep.equal(state1.page)
@@ -216,7 +216,7 @@ describe('replaceLocation', () => {
         hash: '',
       },
       variables: {},
-      lastPageViewSent: undefined,
+      lastPageViewSent: null,
     })
     // confirm no side-effect
     expect(state2.initialState).to.deep.equal(false)
@@ -273,7 +273,7 @@ describe('replaceLocation', () => {
         prop11: 'prop11 from newsPageProps',
         prop12: 'prop12 from newsPageProps',
       },
-      lastPageViewSent: undefined,
+      lastPageViewSent: null,
     })
     expect(state2.prevPages).to.deep.equal(state.prevPages)
   })
@@ -318,7 +318,7 @@ describe('replaceLocation', () => {
         prop11: 'prop11 from newsLatestPageProps',
         prop12: 'prop12 from newsLatestPageProps',
       },
-      lastPageViewSent: undefined,
+      lastPageViewSent: null,
     })
     expect(state3.prevPages).to.deep.equal([])
   })

@@ -30,9 +30,9 @@ const INITIAL_STATE = {
     variables: {},
   },
   page: {
-    location: undefined,
+    location: null,
     variables: {},
-    lastPageViewSent: undefined,
+    lastPageViewSent: null,
   },
   prevPages: [],
   initialState: true,
@@ -87,7 +87,7 @@ export default handleActions({
       page: {
         variables: inherited,
         location,
-        lastPageViewSent: undefined,
+        lastPageViewSent: null,
       },
       initialState: false,
     }
@@ -99,7 +99,7 @@ export default handleActions({
       page: {
         variables: inherited,
         location,
-        lastPageViewSent: undefined,
+        lastPageViewSent: null,
       },
       initialState: false,
     }
@@ -116,8 +116,8 @@ export default handleActions({
       page,
     }
   },
-  [SEND_PAGE_VIEW]: (state, { payload: { location, variables = {}, update = {} } }) => {
-    const { variables: updateVariables = {}, location: updateLocation } = update
+  [SEND_PAGE_VIEW]: (state, { payload: { location = null, variables = {}, update = {} } }) => {
+    const { variables: updateVariables = {}, location: updateLocation = null } = update
     return {
       ...state,
       page: {

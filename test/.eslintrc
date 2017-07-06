@@ -1,12 +1,12 @@
 {
   "rules": {
-    //for temporary variables used in test files
+    // for temporary variables used in test files
     "camelcase":"off",
-    //to explicitly declare undefined values
-    "no-undefined": "off",
-    //to use rewire js (for reflection)
+    // to explicitly declare undefined values
+    // "no-undefined": "off",
+    // to use rewire js (for reflection)
     "no-underscore-dangle": "off",
-    //for convenience
+    // for convenience
     "react/prefer-stateless-function": "off",
     "react/jsx-boolean-value": "off"
   }

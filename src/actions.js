@@ -29,7 +29,7 @@ export const replaceLocation = createAction(LOCATION_REPLACE,
   (location, inherits = false, variables = {}) => ({ location, variables, inherits }))
 
 export const sendPageView = createAction(SEND_PAGE_VIEW,
- (variables = {}, mixins = [], location) => ({ location, variables, mixins }))
+ (variables = {}, mixins = [], location = null) => ({ location, variables, mixins }))
 export const sendEvent = createAction(SEND_EVENT,
  (variables = {}, mixins = []) => ({ variables, mixins }))
 

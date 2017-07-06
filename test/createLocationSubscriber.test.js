@@ -11,9 +11,9 @@ const initialState = {
     variables: {},
   },
   page: {
-    location: undefined,
+    location: null,
     variables: {},
-    lastPageViewSent: undefined,
+    lastPageViewSent: null,
   },
   prevPages: [],
   initialState: true,
@@ -81,13 +81,13 @@ describe('createLocationSubscriber', () => {
     expect(state2.page).to.deep.equal({
       location: news,
       variables: {},
-      lastPageViewSent: undefined,
+      lastPageViewSent: null,
     })
     expect(state2.initialState).to.deep.equal(false)
     expect(state2.prevPages).to.deep.equal([{
       location: top,
       variables: {},
-      lastPageViewSent: undefined,
+      lastPageViewSent: null,
     }])
     // confirm no side effect
     expect(state2.global).to.deep.equal(state.global)
@@ -103,19 +103,19 @@ describe('createLocationSubscriber', () => {
     expect(state2.page).to.deep.equal({
       location: newsLatest,
       variables: {},
-      lastPageViewSent: undefined,
+      lastPageViewSent: null,
     })
     expect(state2.initialState).to.deep.equal(false)
     expect(state2.prevPages).to.deep.equal([
       {
         location: news,
         variables: {},
-        lastPageViewSent: undefined,
+        lastPageViewSent: null,
       },
       {
         location: top,
         variables: {},
-        lastPageViewSent: undefined,
+        lastPageViewSent: null,
       }])
     // confirm no side effect
     expect(state2.global).to.deep.equal(state.global)
@@ -126,12 +126,12 @@ describe('createLocationSubscriber', () => {
     expect(store.getState()[reducerName]).to.deep.equal(state)
     subscriber.notify(top, 'push')
     subscriber.notify(news, 'push')
-    subscriber.notify(undefined, 'pop')
+    subscriber.notify(null, 'pop')
     const state2 = store.getState()[reducerName]
     expect(state2.page).to.deep.equal({
       location: top,
       variables: {},
-      lastPageViewSent: undefined,
+      lastPageViewSent: null,
     })
     expect(state2.prevPages).to.deep.equal([])
     expect(state2.initialState).to.deep.equal(false)
@@ -148,7 +148,7 @@ describe('createLocationSubscriber', () => {
     expect(state2.page).to.deep.equal({
       location: news,
       variables: {},
-      lastPageViewSent: undefined,
+      lastPageViewSent: null,
     })
     expect(state2.initialState).to.deep.equal(false)
     expect(state2.prevPages).to.deep.equal([])
@@ -165,13 +165,13 @@ describe('createLocationSubscriber', () => {
     expect(state2.page).to.deep.equal({
       location: news,
       variables: {},
-      lastPageViewSent: undefined,
+      lastPageViewSent: null,
     })
     expect(state2.initialState).to.deep.equal(false)
     expect(state2.prevPages).to.deep.equal([{
       location: top,
       variables: {},
-      lastPageViewSent: undefined,
+      lastPageViewSent: null,
     }])
     // confirm no side effect
     expect(state2.global).to.deep.equal(state.global)
@@ -181,12 +181,12 @@ describe('createLocationSubscriber', () => {
     const state = { ...initialState }
     expect(store.getState()[reducerName]).to.deep.equal(state)
     subscriber.notify(top, 'replace')
-    subscriber.notify(undefined, 'pop')
+    subscriber.notify(null, 'pop')
     const state2 = store.getState()[reducerName]
     expect(state2.page).to.deep.equal({
       location: top,
       variables: {},
-      lastPageViewSent: undefined,
+      lastPageViewSent: null,
     })
     expect(state2.initialState).to.deep.equal(false)
     expect(state2.prevPages).to.deep.equal([])

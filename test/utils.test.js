@@ -3,7 +3,8 @@ import { expect } from 'chai'
 import { isServer, getDisplayName, valueOrFunction } from '../src/utils'
 
 describe('isServer', () => {
-  it('window = undefined', () => {
+  it('window = null', () => {
+    /* eslint-disable no-undefined */
     global.window = undefined
     expect(isServer()).to.equal(true)
   })

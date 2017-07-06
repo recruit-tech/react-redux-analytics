@@ -33,14 +33,14 @@ const composePageViewPayload = ({
   const composeMixin = composeMixinVariables(reducerName, defaultMixins, mapStateToVariables)
   return ({ variables, location, mixins, ...rest }, state) => ({
     ...rest,
-    location: location || state[reducerName].page.location || getLocationInStore(state),
+    location: location || state[reducerName].page.location || getLocationInStore(state) || null,
     variables: {
       ...composeMixin(mixins, state),
       ...variables,
     },
     update: {
       variables,
-      location,
+      location: location || null,
     },
   })
 }
@@ -65,7 +65,7 @@ export default ({
   eventMixins = [],
   mapStateToVariables = () => ({}), /* (store: Redux.Store) => Object */
   getLocationInStore =
-   () => undefined, /* (store: Redux.Store) => Object */
+   () => null, /* (store: Redux.Store) => Object */
   reducerName = defaultReducerName,
 } = {}) => {
   const pageViewPayload = composePageViewPayload({ reducerName,

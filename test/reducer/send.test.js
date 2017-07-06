@@ -23,7 +23,7 @@ const initialState = {
       prop11: 'prop11 from topPageProps',
       prop15: 'prop15 from topPageProps',
     },
-    lastPageViewSent: undefined,
+    lastPageViewSent: null,
   },
   prevPages: [],
   initialState: false,
@@ -42,7 +42,7 @@ describe('sendPageView', () => {
     const state2 = reducer(state, action)
     expect(state2.page.lastPageViewSent).to.deep.equal({
       variables: pageVariables,
-      location: state.location,
+      location: null,
     })
     // confirm no side effect
     expect(state2.page.variables).to.deep.equal(state.page.variables)
@@ -58,7 +58,7 @@ describe('sendPageView', () => {
     const state2 = reducer(state, action)
     expect(state2.page.lastPageViewSent).to.deep.equal({
       variables: pageVariables,
-      location: state.location,
+      location: null,
     })
     // confirm no side effect
     expect(state2.page.variables).to.deep.equal(state.page.variables)

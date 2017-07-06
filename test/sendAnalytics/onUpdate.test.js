@@ -19,7 +19,7 @@ const expectAction = (variables, mixins = []) => (action) => {
   expect(action).to.deep.equal({
     type: SEND_PAGE_VIEW,
     payload: {
-      location: undefined,
+      location: null,
       variables,
       mixins,
     },
@@ -234,7 +234,7 @@ describe('sendPageViewOnDidMount=false', () => {
     expect(count).to.equal(1)
     wrapper.setProps({ ready: true })
     expect(count).to.equal(2)
-    wrapper.setProps({ ready: undefined })
+    wrapper.setProps({ ready: null })
     expect(count).to.equal(2)
     wrapper.setProps({ ready: true })
     expect(count).to.equal(3)
