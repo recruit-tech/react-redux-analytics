@@ -33,6 +33,7 @@ export default ({
     constructor(props, context) {
       super(props, context)
       this.isPageViewScheduled = false
+      this.preventDuplicate = false
     }
 
     componentDidMount() {
@@ -44,12 +45,14 @@ export default ({
     }
 
     componentWillReceiveProps(nextProps) {
+      this.preventDuplicate = false
       const { dispatch, getState } = this.context.store
       const state = getState()
       if (this.isPageViewScheduled && canSendPageView(nextProps, state)) {
+        this.isPageViewScheduled = false
+        this.preventDuplicate = true
         const variables = composeVars(nextProps, state)
         dispatch(sendPageView(variables, mixins))
-        this.isPageViewScheduled = false
       }
     }
 
@@ -63,6 +66,9 @@ export default ({
 
     schedulePageView(props, state, dispatch) {
       if (canSendPageView(props, state)) {
+        if (this.preventDuplicate) {
+          return
+        }
         const variables = composeVars(props, state)
         dispatch(sendPageView(variables, mixins))
       } else {
