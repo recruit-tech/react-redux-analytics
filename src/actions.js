@@ -3,7 +3,7 @@ import { createAction } from 'redux-actions'
 /**
  * Action types
  */
-const ANALYTICS = 'recruit-redux-analytics'
+const ANALYTICS = 'react-redux-analytics'
 
 export const GLOBAL_VARIABLES_CLEAR = ANALYTICS + '/global/variables/clear'
 export const GLOBAL_VARIABLES_UPDATE = ANALYTICS + '/global/variables/update'
