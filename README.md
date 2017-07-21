@@ -1,5 +1,3 @@
-Readme.md
-
 # react-redux-analytics
 
 Analytics middleware for React+Redux

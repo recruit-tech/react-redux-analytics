@@ -33,6 +33,7 @@ describe('without options, before pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayload['[],[],*'],
+        eventName: null,
       },
     })
   })
@@ -44,6 +45,7 @@ describe('without options, before pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayload['[],eventPayloadMixins,'],
+        eventName: null,
       },
     })
   })
@@ -55,6 +57,7 @@ describe('without options, before pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayload['*,true,'],
+        eventName: null,
       },
     })
   })
@@ -66,6 +69,19 @@ describe('without options, before pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayload['*,false,*'],
+        eventName: null,
+      },
+    })
+  })
+
+  it('with variables, mixins = [], eventName="top:event1"', () => {
+    const action = sendEvent(eventVariables, [], 'top:event1')
+    const action2 = testApply(action)
+    expect(action2).to.deep.equal({
+      type: SEND_EVENT,
+      payload: {
+        variables: withEventPayload['[],[],*'],
+        eventName: 'top:event1',
       },
     })
   })
@@ -94,6 +110,7 @@ describe('without options, after pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayloadAfterPageView['[],[],*'],
+        eventName: null,
       },
     })
   })
@@ -105,6 +122,7 @@ describe('without options, after pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayloadAfterPageView['[],eventPayloadMixins,'],
+        eventName: null,
       },
     })
   })
@@ -116,6 +134,7 @@ describe('without options, after pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayloadAfterPageView['*,true,'],
+        eventName: null,
       },
     })
   })
@@ -127,6 +146,19 @@ describe('without options, after pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayloadAfterPageView['*,false,*'],
+        eventName: null,
+      },
+    })
+  })
+
+  it('with variables, mixins = [], eventName="top:event1"', () => {
+    const action = sendEvent(eventVariables, [], 'top:event1')
+    const action2 = testApply(action)
+    expect(action2).to.deep.equal({
+      type: SEND_EVENT,
+      payload: {
+        variables: withEventPayloadAfterPageView['[],[],*'],
+        eventName: 'top:event1',
       },
     })
   })
@@ -154,6 +186,7 @@ describe('with option eventMixins = array, before pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayload['eventMixins,[],'],
+        eventName: null,
       },
     })
   })
@@ -165,6 +198,7 @@ describe('with option eventMixins = array, before pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayload['eventMixins,eventPayloadMixins,'],
+        eventName: null,
       },
     })
   })
@@ -176,6 +210,7 @@ describe('with option eventMixins = array, before pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayload['*,true,'],
+        eventName: null,
       },
     })
   })
@@ -187,6 +222,19 @@ describe('with option eventMixins = array, before pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayload['*,false,*'],
+        eventName: null,
+      },
+    })
+  })
+
+  it('with variables, mixins = [], eventName="top:event1"', () => {
+    const action = sendEvent(eventVariables, [], 'top:event1')
+    const action2 = testApply(action)
+    expect(action2).to.deep.equal({
+      type: SEND_EVENT,
+      payload: {
+        variables: withEventPayload['eventMixins,[],'],
+        eventName: 'top:event1',
       },
     })
   })
@@ -215,6 +263,7 @@ describe('with option eventMixins = array, after pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayloadAfterPageView['eventMixins,[],'],
+        eventName: null,
       },
     })
   })
@@ -226,6 +275,7 @@ describe('with option eventMixins = array, after pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayloadAfterPageView['eventMixins,eventPayloadMixins,'],
+        eventName: null,
       },
     })
   })
@@ -237,6 +287,7 @@ describe('with option eventMixins = array, after pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayloadAfterPageView['*,true,'],
+        eventName: null,
       },
     })
   })
@@ -248,6 +299,19 @@ describe('with option eventMixins = array, after pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayloadAfterPageView['*,false,*'],
+        eventName: null,
+      },
+    })
+  })
+
+  it('with variables, mixins = [], eventName="top:event1"', () => {
+    const action = sendEvent(eventVariables, [], 'top:event1')
+    const action2 = testApply(action)
+    expect(action2).to.deep.equal({
+      type: SEND_EVENT,
+      payload: {
+        variables: withEventPayloadAfterPageView['eventMixins,[],'],
+        eventName: 'top:event1',
       },
     })
   })
@@ -275,6 +339,7 @@ describe('with option mapStateToVariables, before pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayload['[],[],*'],
+        eventName: null,
       },
     })
   })
@@ -286,6 +351,7 @@ describe('with option mapStateToVariables, before pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayload['[],eventPayloadMixins,mapStateToVariables'],
+        eventName: null,
       },
     })
   })
@@ -297,6 +363,7 @@ describe('with option mapStateToVariables, before pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayload['*,true,mapStateToVariables'],
+        eventName: null,
       },
     })
   })
@@ -308,6 +375,19 @@ describe('with option mapStateToVariables, before pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayload['*,false,*'],
+        eventName: null,
+      },
+    })
+  })
+
+  it('with variables, mixins = [], eventName="top:event1"', () => {
+    const action = sendEvent(eventVariables, [], 'top:event1')
+    const action2 = testApply(action)
+    expect(action2).to.deep.equal({
+      type: SEND_EVENT,
+      payload: {
+        variables: withEventPayload['[],[],*'],
+        eventName: 'top:event1',
       },
     })
   })
@@ -336,6 +416,7 @@ describe('with option mapStateToVariables, after pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayloadAfterPageView['[],[],*'],
+        eventName: null,
       },
     })
   })
@@ -347,6 +428,7 @@ describe('with option mapStateToVariables, after pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayloadAfterPageView['[],eventPayloadMixins,mapStateToVariables'],
+        eventName: null,
       },
     })
   })
@@ -358,6 +440,7 @@ describe('with option mapStateToVariables, after pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayloadAfterPageView['*,true,mapStateToVariables'],
+        eventName: null,
       },
     })
   })
@@ -369,6 +452,19 @@ describe('with option mapStateToVariables, after pageView', () => {
       type: SEND_EVENT,
       payload: {
         variables: withEventPayloadAfterPageView['*,false,*'],
+        eventName: null,
+      },
+    })
+  })
+
+  it('with variables, mixins = [], eventName="top:event1"', () => {
+    const action = sendEvent(eventVariables, [], 'top:event1')
+    const action2 = testApply(action)
+    expect(action2).to.deep.equal({
+      type: SEND_EVENT,
+      payload: {
+        variables: withEventPayloadAfterPageView['[],[],*'],
+        eventName: 'top:event1',
       },
     })
   })
@@ -397,6 +493,7 @@ describe('with option eventMixins = array, mapStateToVariables, before pageView'
       type: SEND_EVENT,
       payload: {
         variables: withEventPayload['eventMixins,[],mapStateToVariables'],
+        eventName: null,
       },
     })
   })
@@ -408,6 +505,7 @@ describe('with option eventMixins = array, mapStateToVariables, before pageView'
       type: SEND_EVENT,
       payload: {
         variables: withEventPayload['eventMixins,eventPayloadMixins,mapStateToVariables'],
+        eventName: null,
       },
     })
   })
@@ -419,6 +517,7 @@ describe('with option eventMixins = array, mapStateToVariables, before pageView'
       type: SEND_EVENT,
       payload: {
         variables: withEventPayload['*,true,mapStateToVariables'],
+        eventName: null,
       },
     })
   })
@@ -430,6 +529,19 @@ describe('with option eventMixins = array, mapStateToVariables, before pageView'
       type: SEND_EVENT,
       payload: {
         variables: withEventPayload['*,false,*'],
+        eventName: null,
+      },
+    })
+  })
+
+  it('with variables, mixins = [], eventName="top:event1"', () => {
+    const action = sendEvent(eventVariables, [], 'top:event1')
+    const action2 = testApply(action)
+    expect(action2).to.deep.equal({
+      type: SEND_EVENT,
+      payload: {
+        variables: withEventPayload['eventMixins,[],mapStateToVariables'],
+        eventName: 'top:event1',
       },
     })
   })
@@ -460,6 +572,7 @@ describe('with option eventMixins = array, mapStateToVariables, after pageView',
       type: SEND_EVENT,
       payload: {
         variables: withEventPayloadAfterPageView['eventMixins,[],mapStateToVariables'],
+        eventName: null,
       },
     })
   })
@@ -471,6 +584,7 @@ describe('with option eventMixins = array, mapStateToVariables, after pageView',
       type: SEND_EVENT,
       payload: {
         variables: withEventPayloadAfterPageView['eventMixins,eventPayloadMixins,mapStateToVariables'],
+        eventName: null,
       },
     })
   })
@@ -482,6 +596,7 @@ describe('with option eventMixins = array, mapStateToVariables, after pageView',
       type: SEND_EVENT,
       payload: {
         variables: withEventPayloadAfterPageView['*,true,mapStateToVariables'],
+        eventName: null,
       },
     })
   })
@@ -493,6 +608,19 @@ describe('with option eventMixins = array, mapStateToVariables, after pageView',
       type: SEND_EVENT,
       payload: {
         variables: withEventPayloadAfterPageView['*,false,*'],
+        eventName: null,
+      },
+    })
+  })
+
+  it('with variables, mixins = [], eventName="top:event1"', () => {
+    const action = sendEvent(eventVariables, [], 'top:event1')
+    const action2 = testApply(action)
+    expect(action2).to.deep.equal({
+      type: SEND_EVENT,
+      payload: {
+        variables: withEventPayloadAfterPageView['eventMixins,[],mapStateToVariables'],
+        eventName: 'top:event1',
       },
     })
   })

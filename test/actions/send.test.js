@@ -110,6 +110,7 @@ describe('sendEvent', () => {
           prop21: 'prop21 from event1Vars',
         },
         mixins: [],
+        eventName: null,
       },
     })
   })
@@ -129,6 +130,7 @@ describe('sendEvent', () => {
           prop21: 'prop21 from event1Vars',
         },
         mixins: ['prop10', 'prop30'],
+        eventName: null,
       },
     })
   })
@@ -148,6 +150,7 @@ describe('sendEvent', () => {
           prop21: 'prop21 from event1Vars',
         },
         mixins: true,
+        eventName: null,
       },
     })
   })
@@ -167,6 +170,23 @@ describe('sendEvent', () => {
           prop21: 'prop21 from event1Vars',
         },
         mixins: false,
+        eventName: null,
+      },
+    })
+  })
+
+  it('with eventName = "top:event1" ', () => {
+    const action = sendEvent({
+      events: ['event1'],
+    }, false, 'top:event1')
+    expect(action).to.deep.equal({
+      type: SEND_EVENT,
+      payload: {
+        variables: {
+          events: ['event1'],
+        },
+        mixins: false,
+        eventName: 'top:event1',
       },
     })
   })

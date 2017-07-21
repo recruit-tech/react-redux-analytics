@@ -31,7 +31,7 @@ export const replaceLocation = createAction(LOCATION_REPLACE,
 export const sendPageView = createAction(SEND_PAGE_VIEW,
  (variables = {}, mixins = [], location = null) => ({ location, variables, mixins }))
 export const sendEvent = createAction(SEND_EVENT,
- (variables = {}, mixins = []) => ({ variables, mixins }))
+ (variables = {}, mixins = [], eventName = null) => ({ variables, mixins, eventName }))
 
 export const clearGlobalVariables = createAction(GLOBAL_VARIABLES_CLEAR, () => ({}))
 export const updateGlobalVariables = createAction(GLOBAL_VARIABLES_UPDATE, (variables) => ({ variables }))
