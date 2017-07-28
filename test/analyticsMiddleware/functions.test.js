@@ -411,6 +411,7 @@ describe('composeEventPayload', () => {
         reducerName,
         defaultMixins: [],
         mapStateToVariables: () => ({}),
+        composeEventName: () => null,
       })
     })
     it('only variables', () => {
@@ -419,6 +420,7 @@ describe('composeEventPayload', () => {
       }, mockState1)
       expect(payload).deep.equal({
         variables: withEventPayload['[],[],*'],
+        eventName: null,
       })
     })
     it('with mixins = array', () => {
@@ -428,6 +430,7 @@ describe('composeEventPayload', () => {
       }, mockState1)
       expect(payload).deep.equal({
         variables: withEventPayload['[],eventPayloadMixins,'],
+        eventName: null,
       })
     })
     it('with mixins = true', () => {
@@ -437,6 +440,7 @@ describe('composeEventPayload', () => {
       }, mockState1)
       expect(payload).deep.equal({
         variables: withEventPayload['*,true,'],
+        eventName: null,
       })
     })
     it('with mixins = false', () => {
@@ -446,6 +450,7 @@ describe('composeEventPayload', () => {
       }, mockState1)
       expect(payload).deep.equal({
         variables: eventVariables,
+        eventName: null,
       })
     })
   })
@@ -456,6 +461,7 @@ describe('composeEventPayload', () => {
         reducerName,
         defaultMixins: eventMixins,
         mapStateToVariables: () => ({}),
+        composeEventName: () => null,
       })
     })
     it('with mixins = []', () => {
@@ -465,6 +471,7 @@ describe('composeEventPayload', () => {
       }, mockState1)
       expect(payload).deep.equal({
         variables: withEventPayload['eventMixins,[],'],
+        eventName: null,
       })
     })
     it('with mixins = array', () => {
@@ -474,6 +481,7 @@ describe('composeEventPayload', () => {
       }, mockState1)
       expect(payload).deep.equal({
         variables: withEventPayload['eventMixins,eventPayloadMixins,'],
+        eventName: null,
       })
     })
     it('with mixins = true', () => {
@@ -483,6 +491,7 @@ describe('composeEventPayload', () => {
       }, mockState1)
       expect(payload).deep.equal({
         variables: withEventPayload['*,true,'],
+        eventName: null,
       })
     })
     it('with mixins = false', () => {
@@ -492,6 +501,7 @@ describe('composeEventPayload', () => {
       }, mockState1)
       expect(payload).deep.equal({
         variables: withEventPayload['*,false,*'],
+        eventName: null,
       })
     })
   })
@@ -502,6 +512,7 @@ describe('composeEventPayload', () => {
         reducerName,
         defaultMixins: eventMixins,
         mapStateToVariables,
+        composeEventName: () => null,
       })
     })
     it('with mixins = []', () => {
@@ -511,6 +522,7 @@ describe('composeEventPayload', () => {
       }, mockState1)
       expect(payload).deep.equal({
         variables: withEventPayload['eventMixins,[],mapStateToVariables'],
+        eventName: null,
       })
     })
     it('with mixins = array', () => {
@@ -520,6 +532,7 @@ describe('composeEventPayload', () => {
       }, mockState1)
       expect(payload).deep.equal({
         variables: withEventPayload['eventMixins,eventPayloadMixins,mapStateToVariables'],
+        eventName: null,
       })
     })
     it('with mixins = true', () => {
@@ -529,6 +542,7 @@ describe('composeEventPayload', () => {
       }, mockState1)
       expect(payload).deep.equal({
         variables: withEventPayload['*,true,mapStateToVariables'],
+        eventName: null,
       })
     })
     it('with mixins = false', () => {
@@ -538,6 +552,65 @@ describe('composeEventPayload', () => {
       }, mockState1)
       expect(payload).deep.equal({
         variables: withEventPayload['*,false,*'],
+        eventName: null,
+      })
+    })
+  })
+
+  describe('with composeEventName', () => {
+    let composePayload
+    beforeEach(() => {
+      composePayload = composeEventPayload({
+        reducerName,
+        defaultMixins: eventMixins,
+        mapStateToVariables,
+        composeEventName: (composedVariables, state) =>
+        `${state.article.title}:${composedVariables.prop30 || '0'}:`
+        + `${composedVariables.prop40 || composedVariables.prop31 || '0'}:${composedVariables.events[0]}`,
+      })
+    })
+    it('with mixins = []', () => {
+      const payload = composePayload({
+        variables: eventVariables,
+        mixins: [],
+      }, mockState1)
+      const expectedVars = withEventPayload['eventMixins,[],mapStateToVariables']
+      expect(payload).deep.equal({
+        variables: expectedVars,
+        eventName: `${mockState1.article.title}:0:${expectedVars.prop31}:${expectedVars.events[0]}`,
+      })
+    })
+    it('with mixins = array', () => {
+      const payload = composePayload({
+        variables: eventVariables,
+        mixins: eventPayloadMixins,
+      }, mockState1)
+      const expectedVars = withEventPayload['eventMixins,eventPayloadMixins,mapStateToVariables']
+      expect(payload).deep.equal({
+        variables: expectedVars,
+        eventName: `${mockState1.article.title}:0:${expectedVars.prop31}:${expectedVars.events[0]}`,
+      })
+    })
+    it('with mixins = true', () => {
+      const payload = composePayload({
+        variables: eventVariables,
+        mixins: true,
+      }, mockState1)
+      const expectedVars = withEventPayload['*,true,mapStateToVariables']
+      expect(payload).deep.equal({
+        variables: expectedVars,
+        eventName: `${mockState1.article.title}:${expectedVars.prop30}:${expectedVars.prop40}:${expectedVars.events[0]}`,
+      })
+    })
+    it('with mixins = false', () => {
+      const payload = composePayload({
+        variables: eventVariables,
+        mixins: false,
+      }, mockState1)
+      const expectedVars = withEventPayload['*,false,*']
+      expect(payload).deep.equal({
+        variables: expectedVars,
+        eventName: `${mockState1.article.title}:0:0:${expectedVars.events[0]}`,
       })
     })
   })
