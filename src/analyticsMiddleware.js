@@ -49,23 +49,25 @@ const composeEventPayload = ({
   reducerName,
   defaultMixins,
   mapStateToVariables,
+  composeEventName,
   }) => {
   const composeMixin = composeMixinVariables(reducerName, defaultMixins, mapStateToVariables)
-  return ({ variables, mixins, ...rest }, state) => ({
-    ...rest,
-    variables: {
-      ...composeMixin(mixins, state),
-      ...variables,
-    },
-  })
+  return ({ variables, mixins, eventName, ...rest }, state) => {
+    const composedVariables = { ...composeMixin(mixins, state), ...variables }
+    return {
+      ...rest,
+      eventName: eventName || composeEventName(composedVariables, state) || null,
+      variables: composedVariables,
+    }
+  }
 }
 
 export default ({
   pageViewMixins = [],
   eventMixins = [],
-  mapStateToVariables = () => ({}), /* (store: Redux.Store) => Object */
-  getLocationInStore =
-   () => null, /* (store: Redux.Store) => Object */
+  mapStateToVariables = () => ({}), /* (state: Object) => Object */
+  getLocationInStore = () => null, /* (state: Object) => Object */
+  composeEventName = () => null, /* (composedVariables: Object, state: Object) => string | null */
   reducerName = defaultReducerName,
 } = {}) => {
   const pageViewPayload = composePageViewPayload({ reducerName,
@@ -76,6 +78,7 @@ export default ({
   const eventPayload = composeEventPayload({ reducerName,
     defaultMixins: eventMixins,
     mapStateToVariables,
+    composeEventName,
   })
 
   return ({ dispatch, getState }) => (next) => (action) => {
