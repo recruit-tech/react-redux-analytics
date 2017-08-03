@@ -1,6 +1,6 @@
 {
   "name": "react-redux-analytics",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Analytics middleware for React+Redux",
   "main": "lib/index.js",
   "directories": {
@@ -29,14 +29,11 @@
   "author": "Recruit Technologies Co.,Ltd.",
   "license": "MIT",
   "dependencies": {
-    "debug": "2.2.0",
-    "hoist-non-react-statics": "1.2.0",
-    "lodash": "4.13.1",
+    "debug": "^2.6.8",
+    "hoist-non-react-statics": "^1.2.0",
+    "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
-    "react": "^15.4.0",
-    "react-redux": "4.4.5",
-    "redux": "3.5.2",
-    "redux-actions": "0.10.1"
+    "redux-actions": "^0.10.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -47,26 +44,29 @@
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
-    "babel-preset-power-assert": "1.0.0",
+    "babel-preset-power-assert": "^1.0.0",
     "babel-preset-react": "^6.24.1",
-    "chai": "^4.0.2",
+    "chai": "^4.1.0",
     "enzyme": "^2.9.1",
-    "eslint": "3.19.0",
-    "eslint-config-airbnb": "^15.0.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-dependencies": "^2.3.0",
-    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.0.1",
     "eslint-plugin-react": "^7.0.0",
-    "fixpack": "2.3.1",
+    "fixpack": "^2.3.1",
     "jsdom": "^11.1.0",
     "jsdom-global": "^3.0.2",
-    "mocha": "^3.4.2",
-    "must-call": "1.0.0",
-    "npm-run-all": "4.0.2",
-    "power-assert": "1.4.2",
+    "mocha": "^3.5.0",
+    "must-call": "^1.0.0",
+    "npm-run-all": "^4.0.2",
+    "power-assert": "^1.4.4",
+    "react": "^15.4.0",
     "react-dom": "^15.6.1",
+    "react-redux": "^4.4.8",
     "react-test-renderer": "^15.6.1",
+    "redux": "^3.7.2",
     "rewire": "^2.5.2",
-    "rimraf": "2.6.1"
+    "rimraf": "^2.6.1"
   }
 }
