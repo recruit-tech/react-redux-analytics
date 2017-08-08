@@ -1,5 +1,6 @@
 import { reducerName } from '../../src/names'
 import { news, newsLatest } from '../_data/location'
+import { newsPageProps } from './props'
 
 export const mockState1 = {
   article: {
@@ -32,6 +33,7 @@ export const mockState1 = {
         prop41: 'prop41 from topPageProps',
       },
       lastPageViewSent: null,
+      snapshot: { ...newsPageProps },
     },
     prevPages: [],
     initialState: false,
@@ -46,6 +48,7 @@ export const mockState2 = {
     page: {
       ...mockState1[reducerName].page,
       location: newsLatest,
+      snapshot: null,
     },
   },
 }

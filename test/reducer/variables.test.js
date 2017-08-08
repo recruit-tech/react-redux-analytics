@@ -3,6 +3,7 @@ import { expect } from 'chai'
 import { clearGlobalVariables, updateGlobalVariables,
   clearPageVariables, updatePageVariables } from '../../src/actions'
 import reducer from '../../src/reducer'
+import { topPageProps } from '../_data/props'
 
 const initialState = {
   global: {
@@ -25,6 +26,7 @@ const initialState = {
       prop15: 'prop15 from topPageProps',
     },
     lastPageViewSent: null,
+    snapshot: { ...topPageProps },
   },
   prevPages: [],
   initialState: false,
@@ -52,6 +54,7 @@ describe('updatePageVariables', () => {
     // confirm no side-effect
     expect(state2.page.location).to.deep.equal(state.page.location)
     expect(state2.page.lastPageViewSent).to.deep.equal(state.page.lastPageViewSent)
+    expect(state2.page.snapshot).to.deep.equal(state.page.snapshot)
     expect(state2.initialState).to.deep.equal(state.initialState)
     expect(state2.prevPages).to.deep.equal(state.prevPages)
     expect(state2.global).to.deep.equal(state.global)
@@ -69,6 +72,7 @@ describe('clearPageVariables', () => {
     // confirm no side-effect
     expect(state2.page.location).to.deep.equal(state.page.location)
     expect(state2.page.lastPageViewSent).to.deep.equal(state.page.lastPageViewSent)
+    expect(state2.page.snapshot).to.deep.equal(state.page.snapshot)
     expect(state2.initialState).to.deep.equal(state.initialState)
     expect(state2.prevPages).to.deep.equal(state.prevPages)
     expect(state2.global).to.deep.equal(state.global)

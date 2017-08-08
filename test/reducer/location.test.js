@@ -11,6 +11,7 @@ const initialState = {
     location: null,
     variables: {},
     lastPageViewSent: null,
+    snapshot: null,
   },
   prevPages: [],
   initialState: true,
@@ -33,6 +34,7 @@ const secondState = {
       prop15: 'prop15 from topPageProps',
     },
     lastPageViewSent: null,
+    snapshot: null,
   },
   prevPages: [],
   initialState: false,
@@ -56,6 +58,7 @@ const thirdState = {
       prop12: 'prop12 from newsPageProps',
     },
     lastPageViewSent: null,
+    snapshot: null,
   },
   prevPages: [{
     location: {
@@ -69,6 +72,7 @@ const thirdState = {
       prop15: 'prop15 from topPageProps',
     },
     lastPageViewSent: null,
+    snapshot: null,
   }],
   initialState: false,
 }
@@ -90,6 +94,7 @@ describe('pushLocation', () => {
       },
       variables: {},
       lastPageViewSent: null,
+      snapshot: null,
     })
     // confirm no side-effect
     expect(state2.initialState).to.deep.equal(false)
@@ -137,6 +142,7 @@ describe('pushLocation', () => {
         prop15: 'prop15 from topPageProps',
       },
       lastPageViewSent: null,
+      snapshot: null,
     })
   })
 
@@ -193,6 +199,7 @@ describe('pushLocation', () => {
         prop12: 'prop12 from newsPageProps',
       },
       lastPageViewSent: null,
+      snapshot: null,
     })
     expect(state3.prevPages[0]).to.deep.equal(state2.page)
     expect(state3.prevPages[1]).to.deep.equal(state1.page)
@@ -217,6 +224,7 @@ describe('replaceLocation', () => {
       },
       variables: {},
       lastPageViewSent: null,
+      snapshot: null,
     })
     // confirm no side-effect
     expect(state2.initialState).to.deep.equal(false)
@@ -274,6 +282,7 @@ describe('replaceLocation', () => {
         prop12: 'prop12 from newsPageProps',
       },
       lastPageViewSent: null,
+      snapshot: null,
     })
     expect(state2.prevPages).to.deep.equal(state.prevPages)
   })
@@ -319,6 +328,7 @@ describe('replaceLocation', () => {
         prop12: 'prop12 from newsLatestPageProps',
       },
       lastPageViewSent: null,
+      snapshot: null,
     })
     expect(state3.prevPages).to.deep.equal([])
   })

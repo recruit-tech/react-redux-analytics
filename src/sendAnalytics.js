@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { isFunction, pickBy } from 'lodash/fp'
 import hoistStatics from 'hoist-non-react-statics'
 import { getDisplayName, valueOrFunction } from './utils'
-import { sendPageView } from './actions'
+import { sendPageView, snapshotPageProps } from './actions'
 import { sendAnalyticsPropertyName } from './names'
 
 const composeVariables = (staticVariables, mapPropsToVariables) => (props, state) => {
@@ -20,6 +20,7 @@ export default ({
   sendPageViewOnDidUpdate = false, /* boolean | ( prevProps: Object, props: Object, state: Object) => boolean */
   mapPropsToVariables, /* (props: Object, state: Object) => Object */
   onDataReady = true, /* boolean | (props: Object, state: Object) => boolean */
+  snapshotPropsOnPageView = false, /* boolean | (props: Object, state: Object) => boolean */
   mixins = [],
   ...staticVariables
 }) => (WrappedComponent) => {
@@ -27,6 +28,7 @@ export default ({
   const shouldSendOnDidMount = valueOrFunction(sendPageViewOnDidMount)
   const shouldSendOnDidUpdate = valueOrFunction(sendPageViewOnDidUpdate)
   const canSendPageView = valueOrFunction(onDataReady)
+  const shouldsnapshotProps = valueOrFunction(snapshotPropsOnPageView)
 
   class WrapperComponent extends Component {
 
@@ -52,6 +54,9 @@ export default ({
         this.isPageViewScheduled = false
         this.preventDuplicate = true
         const variables = composeVars(nextProps, state)
+        if (shouldsnapshotProps(nextProps, state)) {
+          dispatch(snapshotPageProps(nextProps))
+        }
         dispatch(sendPageView(variables, mixins))
       }
     }
@@ -70,6 +75,9 @@ export default ({
           return
         }
         const variables = composeVars(props, state)
+        if (shouldsnapshotProps(props, state)) {
+          dispatch(snapshotPageProps(props))
+        }
         dispatch(sendPageView(variables, mixins))
       } else {
         this.isPageViewScheduled = true

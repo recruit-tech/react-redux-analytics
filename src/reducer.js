@@ -3,7 +3,9 @@ import { pick } from 'lodash/fp'
 import debugFactory from 'debug'
 import { LOCATION_PUSH, LOCATION_POP, LOCATION_REPLACE,
   GLOBAL_VARIABLES_CLEAR, GLOBAL_VARIABLES_UPDATE,
-  PAGE_VARIABLES_CLEAR, PAGE_VARIABLES_UPDATE, SEND_PAGE_VIEW } from './actions'
+  PAGE_VARIABLES_CLEAR, PAGE_VARIABLES_UPDATE, SEND_PAGE_VIEW,
+  PAGE_SNAPSHOT_PROPS,
+ } from './actions'
 
 const debug = debugFactory('analytics')
 
@@ -33,6 +35,7 @@ const INITIAL_STATE = {
     location: null,
     variables: {},
     lastPageViewSent: null,
+    snapshot: null,
   },
   prevPages: [],
   initialState: true,
@@ -78,6 +81,13 @@ export default handleActions({
       },
     },
   }),
+  [PAGE_SNAPSHOT_PROPS]: (state, { payload: { props } }) => ({
+    ...state,
+    page: {
+      ...state.page,
+      snapshot: props,
+    },
+  }),
   [LOCATION_PUSH]: (state, { payload: { location, variables = {}, inherits = false } }) => {
     const prevPages = state.initialState ? [] : [state.page, ...state.prevPages].slice(0, MAX_LOCATION_STACK)
     const inherited = inheritVariables(variables, state.page, inherits)
@@ -88,6 +98,7 @@ export default handleActions({
         variables: inherited,
         location,
         lastPageViewSent: null,
+        snapshot: null,
       },
       initialState: false,
     }
@@ -100,6 +111,7 @@ export default handleActions({
         variables: inherited,
         location,
         lastPageViewSent: null,
+        snapshot: null,
       },
       initialState: false,
     }
