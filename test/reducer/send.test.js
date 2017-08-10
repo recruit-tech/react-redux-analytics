@@ -2,6 +2,7 @@ import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import { sendPageView, sendEvent, fallbackPageView, SEND_PAGE_VIEW } from '../../src/actions'
 import reducer from '../../src/reducer'
+import { topPageProps } from '../_data/props'
 
 const initialState = {
   global: {
@@ -24,6 +25,7 @@ const initialState = {
       prop15: 'prop15 from topPageProps',
     },
     lastPageViewSent: null,
+    snapshot: { ...topPageProps },
   },
   prevPages: [],
   initialState: false,
@@ -46,6 +48,7 @@ describe('sendPageView', () => {
     })
     // confirm no side effect
     expect(state2.page.variables).to.deep.equal(state.page.variables)
+    expect(state2.page.snapshot).to.deep.equal(state.page.snapshot)
     expect(state2.page.location).to.deep.equal(state.page.location)
     expect(state2.initialState).to.deep.equal(state.initialState)
     expect(state2.prevPages).to.deep.equal(state.prevPages)
@@ -62,6 +65,7 @@ describe('sendPageView', () => {
     })
     // confirm no side effect
     expect(state2.page.variables).to.deep.equal(state.page.variables)
+    expect(state2.page.snapshot).to.deep.equal(state.page.snapshot)
     expect(state2.page.location).to.deep.equal(state.page.location)
     expect(state2.initialState).to.deep.equal(state.initialState)
     expect(state2.prevPages).to.deep.equal(state.prevPages)
@@ -87,6 +91,7 @@ describe('sendPageView', () => {
     // confirm no side effect
     expect(state2.page.variables).to.deep.equal(state.page.variables)
     expect(state2.page.location).to.deep.equal(state.page.location)
+    expect(state2.page.snapshot).to.deep.equal(state.page.snapshot)
     expect(state2.initialState).to.deep.equal(state.initialState)
     expect(state2.prevPages).to.deep.equal(state.prevPages)
     expect(state2.global).to.deep.equal(state.global)
@@ -140,6 +145,7 @@ describe('sendPageView', () => {
     })
     expect(state2.page.location).to.deep.equal(locNews)
     // confirm no side effect
+    expect(state2.page.snapshot).to.deep.equal(state.page.snapshot)
     expect(state2.initialState).to.deep.equal(state.initialState)
     expect(state2.prevPages).to.deep.equal(state.prevPages)
     expect(state2.global).to.deep.equal(state.global)
@@ -159,6 +165,7 @@ describe('sendEvent', () => {
     expect(state2.page.variables).to.deep.equal(state.page.variables)
     expect(state2.page.location).to.deep.equal(state.page.location)
     expect(state2.page.lastPageViewSent).to.deep.equal(state.page.lastPageViewSent)
+    expect(state2.page.snapshot).to.deep.equal(state.page.snapshot)
     expect(state2.initialState).to.deep.equal(state.initialState)
     expect(state2.prevPages).to.deep.equal(state.prevPages)
     expect(state2.global).to.deep.equal(state.global)
@@ -176,6 +183,7 @@ describe('sendEvent', () => {
     expect(state2.page.variables).to.deep.equal(state.page.variables)
     expect(state2.page.location).to.deep.equal(state.page.location)
     expect(state2.page.lastPageViewSent).to.deep.equal(state.page.lastPageViewSent)
+    expect(state2.page.snapshot).to.deep.equal(state.page.snapshot)
     expect(state2.initialState).to.deep.equal(state.initialState)
     expect(state2.prevPages).to.deep.equal(state.prevPages)
     expect(state2.global).to.deep.equal(state.global)
@@ -193,6 +201,7 @@ describe('sendEvent', () => {
     expect(state2.page.variables).to.deep.equal(state.page.variables)
     expect(state2.page.location).to.deep.equal(state.page.location)
     expect(state2.page.lastPageViewSent).to.deep.equal(state.page.lastPageViewSent)
+    expect(state2.page.snapshot).to.deep.equal(state.page.snapshot)
     expect(state2.initialState).to.deep.equal(state.initialState)
     expect(state2.prevPages).to.deep.equal(state.prevPages)
     expect(state2.global).to.deep.equal(state.global)
@@ -210,6 +219,7 @@ describe('sendEvent', () => {
     expect(state2.page.variables).to.deep.equal(state.page.variables)
     expect(state2.page.location).to.deep.equal(state.page.location)
     expect(state2.page.lastPageViewSent).to.deep.equal(state.page.lastPageViewSent)
+    expect(state2.page.snapshot).to.deep.equal(state.page.snapshot)
     expect(state2.initialState).to.deep.equal(state.initialState)
     expect(state2.prevPages).to.deep.equal(state.prevPages)
     expect(state2.global).to.deep.equal(state.global)
@@ -229,6 +239,7 @@ describe('fallbackPageView', () => {
     expect(state2.page.variables).to.deep.equal(state.page.variables)
     expect(state2.page.location).to.deep.equal(state.page.location)
     expect(state2.page.lastPageViewSent).to.deep.equal(state.page.lastPageViewSent)
+    expect(state2.page.snapshot).to.deep.equal(state.page.snapshot)
     expect(state2.initialState).to.deep.equal(state.initialState)
     expect(state2.prevPages).to.deep.equal(state.prevPages)
     expect(state2.global).to.deep.equal(state.global)

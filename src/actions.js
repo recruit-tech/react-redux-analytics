@@ -10,6 +10,7 @@ export const GLOBAL_VARIABLES_UPDATE = ANALYTICS + '/global/variables/update'
 
 export const PAGE_VARIABLES_CLEAR = ANALYTICS + '/page/variables/clear'
 export const PAGE_VARIABLES_UPDATE = ANALYTICS + '/page/variables/update'
+export const PAGE_SNAPSHOT_PROPS = ANALYTICS + '/page/snapshot-props'
 
 export const LOCATION_PUSH = ANALYTICS + '/location/push'
 export const LOCATION_POP = ANALYTICS + '/location/pop'
@@ -38,3 +39,5 @@ export const updateGlobalVariables = createAction(GLOBAL_VARIABLES_UPDATE, (vari
 export const clearPageVariables = createAction(PAGE_VARIABLES_CLEAR, () => ({}))
 export const updatePageVariables = createAction(PAGE_VARIABLES_UPDATE, (variables) => ({ variables }))
 export const fallbackPageView = createAction(FALLBACK_PAGEVIEW, (location) => ({ location }))
+
+export const snapshotPageProps = createAction(PAGE_SNAPSHOT_PROPS, (props) => ({ props }))

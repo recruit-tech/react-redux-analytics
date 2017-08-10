@@ -14,6 +14,7 @@ const initialState = {
     location: null,
     variables: {},
     lastPageViewSent: null,
+    snapshot: null,
   },
   prevPages: [],
   initialState: true,
@@ -40,6 +41,7 @@ describe('createLocationSubscriber', () => {
     // confirm no side effect
     expect(state2.page.variables).to.deep.equal(state.page.variables)
     expect(state2.page.lastPageViewSent).to.deep.equal(state.page.lastPageViewSent)
+    expect(state2.page.snapshot).to.deep.equal(state.page.snapshot)
     expect(state2.prevPages).to.deep.equal(state.prevPages)
     expect(state2.global).to.deep.equal(state.global)
   })
@@ -54,6 +56,7 @@ describe('createLocationSubscriber', () => {
     // confirm no side effect
     expect(state2.page.variables).to.deep.equal(state.page.variables)
     expect(state2.page.lastPageViewSent).to.deep.equal(state.page.lastPageViewSent)
+    expect(state2.page.snapshot).to.deep.equal(state.page.snapshot)
     expect(state2.prevPages).to.deep.equal(state.prevPages)
     expect(state2.global).to.deep.equal(state.global)
   })
@@ -68,6 +71,7 @@ describe('createLocationSubscriber', () => {
     expect(state2.initialState).to.deep.equal(state.initialState)
     expect(state2.page.variables).to.deep.equal(state.page.variables)
     expect(state2.page.lastPageViewSent).to.deep.equal(state.page.lastPageViewSent)
+    expect(state2.page.snapshot).to.deep.equal(state.page.snapshot)
     expect(state2.prevPages).to.deep.equal(state.prevPages)
     expect(state2.global).to.deep.equal(state.global)
   })
@@ -82,12 +86,14 @@ describe('createLocationSubscriber', () => {
       location: news,
       variables: {},
       lastPageViewSent: null,
+      snapshot: null,
     })
     expect(state2.initialState).to.deep.equal(false)
     expect(state2.prevPages).to.deep.equal([{
       location: top,
       variables: {},
       lastPageViewSent: null,
+      snapshot: null,
     }])
     // confirm no side effect
     expect(state2.global).to.deep.equal(state.global)
@@ -104,6 +110,7 @@ describe('createLocationSubscriber', () => {
       location: newsLatest,
       variables: {},
       lastPageViewSent: null,
+      snapshot: null,
     })
     expect(state2.initialState).to.deep.equal(false)
     expect(state2.prevPages).to.deep.equal([
@@ -111,11 +118,13 @@ describe('createLocationSubscriber', () => {
         location: news,
         variables: {},
         lastPageViewSent: null,
+        snapshot: null,
       },
       {
         location: top,
         variables: {},
         lastPageViewSent: null,
+        snapshot: null,
       }])
     // confirm no side effect
     expect(state2.global).to.deep.equal(state.global)
@@ -132,6 +141,7 @@ describe('createLocationSubscriber', () => {
       location: top,
       variables: {},
       lastPageViewSent: null,
+      snapshot: null,
     })
     expect(state2.prevPages).to.deep.equal([])
     expect(state2.initialState).to.deep.equal(false)
@@ -149,6 +159,7 @@ describe('createLocationSubscriber', () => {
       location: news,
       variables: {},
       lastPageViewSent: null,
+      snapshot: null,
     })
     expect(state2.initialState).to.deep.equal(false)
     expect(state2.prevPages).to.deep.equal([])
@@ -166,12 +177,14 @@ describe('createLocationSubscriber', () => {
       location: news,
       variables: {},
       lastPageViewSent: null,
+      snapshot: null,
     })
     expect(state2.initialState).to.deep.equal(false)
     expect(state2.prevPages).to.deep.equal([{
       location: top,
       variables: {},
       lastPageViewSent: null,
+      snapshot: null,
     }])
     // confirm no side effect
     expect(state2.global).to.deep.equal(state.global)
@@ -187,6 +200,7 @@ describe('createLocationSubscriber', () => {
       location: top,
       variables: {},
       lastPageViewSent: null,
+      snapshot: null,
     })
     expect(state2.initialState).to.deep.equal(false)
     expect(state2.prevPages).to.deep.equal([])
