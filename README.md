@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/recruit-tech/react-redux-analytics.svg?branch=master)](https://travis-ci.org/recruit-tech/react-redux-analytics)
 # react-redux-analytics
 
 Analytics middleware for React+Redux
