@@ -1,6 +1,6 @@
 {
   "name": "react-redux-analytics",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Analytics middleware for React+Redux",
   "main": "lib/index.js",
   "directories": {
@@ -28,6 +28,14 @@
   },
   "author": "Recruit Technologies Co.,Ltd.",
   "license": "MIT",
+  "repository" :{
+    "type" : "git",
+    "url" : "github.com/recruit-tech/react-redux-analytics"
+  },
+  "homepage": "https://github.com/recruit-tech/react-redux-analytics",
+  "bugs":{
+    "url": "https://github.com/recruit-tech/react-redux-analytics/issues"
+  },
   "dependencies": {
     "debug": "^2.6.8",
     "hoist-non-react-statics": "^1.2.0",
