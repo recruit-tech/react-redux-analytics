@@ -192,6 +192,7 @@ analyticsMiddleware(options : {
   mapStateToVariables?: (state: Object) => Object;
   getLocationInStore?: (state: Object) => Object;
   composeEventName?: (composedVariables: Object, state: Object) => string | null;
+  suppressPageView?: (state: Object, transformedAciton: Object) => boolean,
 }) : (store: Redux.Store) => (next: function) => (action: Object) => void
 ```
 ##### arguments
@@ -219,6 +220,10 @@ analyticsMiddleware(options : {
 * `[composeEventName]` ((composedVariables: Object, state: Object) => string | null)
   If a function is specified, the middleware use the return value of the function to override `eventName` property of `SEND_EVENT` payload. The function takes two arguments: `copmosedVariables` (1st argument) that are resulting `variables` composed of original payload `variables` and injected values, and `state` (2nd argument) that are the state of entire redux store. Like `getLocationInStore`, the middleware overrides property only if original property is `null` and the output value is **NOT** `null`.
   Default value: `() => null`
+
+* `[suppressPageView]` ((state: Object, transformedAction: Object) => boolean)
+  If a function is specified, `analyticsMiddleware` evaluates it just before passing a transfromed `SEND_PAGE_VIEW` action to the next middleware. If the return value is false, the action is discarded in this middleare and thus not be received by the plugin middlware (if it is properly placed **after** this one). This option is only useful if you cannot control dispatches of `SEND_PAGE_VIEW` by the lifecycle hooks of `sendAnalytics`.
+  Default value: `() => false`
 
 ##### Example
 ```js
