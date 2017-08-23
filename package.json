@@ -1,6 +1,6 @@
 {
   "name": "react-redux-analytics",
-  "version": "0.1.5",
+  "version": "0.1.6-rc2",
   "description": "Analytics middleware for React+Redux",
   "main": "lib/index.js",
   "directories": {
@@ -24,7 +24,11 @@
     "test:build": "babel test --out-dir _test",
     "test:watch": "npm run test:build -- --watch",
     "preversion": "npm run test",
-    "version": "npm-run-all clean build"
+    "version": "npm-run-all clean build",
+    "release": "run-s version publish:public",
+    "release:beta": "run-s version publish:beta",
+    "publish:public": "npm publish",
+    "publish:beta": " npm publish --tag beta"
   },
   "author": "Recruit Technologies Co.,Ltd.",
   "license": "MIT",
