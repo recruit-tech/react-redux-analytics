@@ -68,6 +68,7 @@ export default ({
   mapStateToVariables = () => ({}), /* (state: Object) => Object */
   getLocationInStore = () => null, /* (state: Object) => Object */
   composeEventName = () => null, /* (composedVariables: Object, state: Object) => string | null */
+  suppressPageView = () => false, /* (state: Object, action: Object) => boolean */
   reducerName = defaultReducerName,
 } = {}) => {
   const pageViewPayload = composePageViewPayload({ reducerName,
@@ -83,9 +84,13 @@ export default ({
 
   return ({ dispatch, getState }) => (next) => (action) => {
     if (action.type === SEND_PAGE_VIEW) {
-      return next({ ...action, payload: pageViewPayload(action.payload, getState()) })
+      const state = getState()
+      const transformed = { ...action, payload: pageViewPayload(action.payload, state) }
+      if (suppressPageView(state, transformed)) {
+        return null
+      }
+      return next(transformed)
     }
-
     if (action.type === SEND_EVENT) {
       return next({ ...action, payload: eventPayload(action.payload, getState()) })
     }
