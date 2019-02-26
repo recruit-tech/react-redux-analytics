@@ -20,7 +20,7 @@
     "clean": "rimraf lib/*",
     "lint": "eslint src test",
     "fixpack": "fixpack",
-    "test": "mocha test --compilers js:babel-core/register --colors --recursive",
+    "test": "mocha test --require babel-core/register --colors --recursive",
     "test:build": "babel test --out-dir _test",
     "test:watch": "npm run test:build -- --watch",
     "preversion": "npm run test",
@@ -32,24 +32,24 @@
   },
   "author": "Recruit Technologies Co.,Ltd.",
   "license": "MIT",
-  "repository" :{
-    "type" : "git",
-    "url" : "github.com/recruit-tech/react-redux-analytics"
+  "repository": {
+    "type": "git",
+    "url": "github.com/recruit-tech/react-redux-analytics"
   },
   "homepage": "https://github.com/recruit-tech/react-redux-analytics",
-  "bugs":{
+  "bugs": {
     "url": "https://github.com/recruit-tech/react-redux-analytics/issues"
   },
   "dependencies": {
     "debug": "^2.6.8",
     "hoist-non-react-statics": "^1.2.0",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.11",
     "prop-types": "^15.5.10",
     "redux-actions": "^2.2.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.24.1",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-eslint": "^7.2.3",
     "babel-plugin-syntax-trailing-function-commas": "^6.22.0",
     "babel-plugin-transform-es2015-destructuring": "^6.23.0",
@@ -63,13 +63,13 @@
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-dependencies": "^2.3.0",
-    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^5.0.1",
     "eslint-plugin-react": "^7.0.0",
     "fixpack": "^2.3.1",
-    "jsdom": "^11.1.0",
+    "jsdom": "^13.2.0",
     "jsdom-global": "^3.0.2",
-    "mocha": "^3.5.0",
+    "mocha": "^6.0.2",
     "must-call": "^1.0.0",
     "npm-run-all": "^4.0.2",
     "power-assert": "^1.4.4",
