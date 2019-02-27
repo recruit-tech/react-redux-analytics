@@ -41,9 +41,9 @@
     "url": "https://github.com/recruit-tech/react-redux-analytics/issues"
   },
   "dependencies": {
-    "debug": "^2.6.8",
     "hoist-non-react-statics": "^1.2.0",
-    "lodash": "^4.17.11",
+    "lodash.pick": "^4.4.0",
+    "lodash.pickby": "^4.6.0",
     "prop-types": "^15.5.10",
     "redux-actions": "^2.2.1"
   },
