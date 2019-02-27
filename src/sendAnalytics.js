@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { isFunction, pickBy } from 'lodash/fp'
+import pickBy from 'lodash.pickby'
 import hoistStatics from 'hoist-non-react-statics'
-import { getDisplayName, valueOrFunction } from './utils'
+import { getDisplayName, valueOrFunction, isFunction } from './utils'
 import { sendPageView, snapshotPageProps } from './actions'
 import { sendAnalyticsPropertyName } from './names'
 
@@ -12,7 +12,7 @@ const composeVariables = (staticVariables, mapPropsToVariables) => (props, state
   }
 
   const mappedVars = mapPropsToVariables(props, state)
-  return { ...pickBy(Boolean)(mappedVars), ...staticVariables }
+  return { ...pickBy(mappedVars, Boolean), ...staticVariables }
 }
 
 export default ({

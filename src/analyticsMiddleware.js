@@ -1,4 +1,4 @@
-import { pick } from 'lodash/fp'
+import pick from 'lodash.pick'
 import { reducerName as defaultReducerName } from './names'
 import { SEND_PAGE_VIEW, SEND_EVENT } from './actions'
 
@@ -18,10 +18,10 @@ const composeMixinVariables = (reducerName, defaultMixins = [], mapStateToVariab
   }
 
   if (Array.isArray(mixins)) {
-    return pick([...defaultMixins, ...mixins])(mergedVars)
+    return pick(mergedVars, [...defaultMixins, ...mixins])
   }
 
-  return pick([...defaultMixins])(mergedVars)
+  return pick(mergedVars, [...defaultMixins])
 }
 
 const composePageViewPayload = ({

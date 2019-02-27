@@ -1,13 +1,10 @@
 import { handleActions } from 'redux-actions'
-import { pick } from 'lodash/fp'
-import debugFactory from 'debug'
+import pick from 'lodash.pick'
 import { LOCATION_PUSH, LOCATION_POP, LOCATION_REPLACE,
   GLOBAL_VARIABLES_CLEAR, GLOBAL_VARIABLES_UPDATE,
   PAGE_VARIABLES_CLEAR, PAGE_VARIABLES_UPDATE, SEND_PAGE_VIEW,
   PAGE_SNAPSHOT_PROPS,
  } from './actions'
-
-const debug = debugFactory('analytics')
 
 const MAX_LOCATION_STACK = 20
 
@@ -19,7 +16,7 @@ const inheritVariables = (variables, page, inherits) => {
     return { ...page.variables, ...variables }
   }
   if (Array.isArray(inherits)) {
-    return { ...pick(inherits)(page.variables), ...variables }
+    return { ...pick(page.variables, inherits), ...variables }
   }
   return variables
 }
@@ -119,7 +116,7 @@ export default handleActions({
   [LOCATION_POP]: (state, payload) => {
     const prevPages = [...state.prevPages]
     if (prevPages.length < 1) {
-      debug(`Location stack is empty. Max stack size = ${MAX_LOCATION_STACK}`)
+      console.warn(`Location stack is empty. Max stack size = ${MAX_LOCATION_STACK}`)
     }
     const page = prevPages.shift() || state.page
     return {
