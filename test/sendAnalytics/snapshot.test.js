@@ -3,7 +3,8 @@ import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import React from 'react'
 import { createStore } from 'redux'
-import { mount } from 'enzyme'
+import { configure, mount } from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
 import { SEND_PAGE_VIEW, PAGE_SNAPSHOT_PROPS } from '../../src/actions'
 import sendAnalytics from '../../src/sendAnalytics'
 import { topPageProps } from '../_data/props'
@@ -12,6 +13,8 @@ import { mapPropsToVariables2 } from '../_data/mapFunction'
 import MockComponent from '../_data/component'
 import { withStaticVariables } from '../_data/hocOutput'
 import { pageViewPayloadMixins } from '../_data/mixins'
+
+configure({ adapter: new Adapter() })
 
 /* eslint-disable callback-return */
 const expectAction = (variables, mixins = []) => (action) => {

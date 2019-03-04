@@ -44,6 +44,10 @@
     "lodash.pick": "^4.4.0",
     "lodash.pickby": "^4.6.0",
     "prop-types": "^15.5.10",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-redux": "^6.0.1",
+    "redux": "^3.7.2",
     "redux-actions": "^2.2.1"
   },
   "devDependencies": {
@@ -58,7 +62,8 @@
     "babel-preset-power-assert": "^1.0.0",
     "babel-preset-react": "^6.24.1",
     "chai": "^4.1.1",
-    "enzyme": "^2.9.1",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.10.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-dependencies": "^2.3.0",
@@ -71,11 +76,7 @@
     "must-call": "^1.0.0",
     "npm-run-all": "^4.0.2",
     "power-assert": "^1.4.4",
-    "react": "^15.4.0",
-    "react-dom": "^15.6.1",
-    "react-redux": "^4.4.8",
-    "react-test-renderer": "^15.6.1",
-    "redux": "^3.7.2",
+    "react-test-renderer": "^16.8.3",
     "rewire": "^2.5.2",
     "rimraf": "^2.6.1"
   }
