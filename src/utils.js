@@ -8,7 +8,7 @@ export const isServer = () => {
 
 export const getDisplayName = (component) => component.displayName || component.name
 
-export const isFunction = (fn) => typeof fn === "function"
+export const isFunction = (fn) => typeof fn === 'function'
 
 export const valueOrFunction = (test) => (...args) => {
   if (!isFunction(test)) {

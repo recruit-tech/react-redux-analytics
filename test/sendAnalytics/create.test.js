@@ -3,12 +3,15 @@ import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import React from 'react'
 import { createStore } from 'redux'
-import { mount } from 'enzyme'
+import { configure, mount } from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
 import { sendAnalyticsPropertyName } from '../../src/names'
 import sendAnalytics from '../../src/sendAnalytics'
 import { topPageProps } from '../_data/props'
 import { mockState1 } from '../_data/state'
 import MockComponent from '../_data/component'
+
+configure({ adapter: new Adapter() })
 
 describe('default', () => {
   let Component

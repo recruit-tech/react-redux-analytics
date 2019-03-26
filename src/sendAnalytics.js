@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { ReactReduxContext } from 'react-redux'
 import PropTypes from 'prop-types'
 import pickBy from 'lodash.pickby'
 import hoistStatics from 'hoist-non-react-statics'
@@ -85,7 +86,18 @@ export default ({
     }
 
     render() {
-      return (<WrappedComponent {...this.props} />)
+      return (
+        <ReactReduxContext.Consumer>
+          {(store) => (
+            <WrappedComponent {
+              ...{
+                ...this.props,
+                store,
+              }}
+            />
+          )}
+        </ReactReduxContext.Consumer>
+      )
     }
   }
 

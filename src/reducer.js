@@ -116,6 +116,7 @@ export default handleActions({
   [LOCATION_POP]: (state, payload) => {
     const prevPages = [...state.prevPages]
     if (prevPages.length < 1) {
+      // eslint-disable-next-line no-console
       console.warn(`Location stack is empty. Max stack size = ${MAX_LOCATION_STACK}`)
     }
     const page = prevPages.shift() || state.page
