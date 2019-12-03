@@ -79,11 +79,5 @@
     "redux": "^3.7.2",
     "rewire": "^2.5.2",
     "rimraf": "^2.6.1"
-  },
-  "peerDependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-redux": "^7.0.0",
-    "redux": "^4.0.0"
   }
 }
