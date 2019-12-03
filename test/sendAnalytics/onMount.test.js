@@ -70,6 +70,8 @@ const rejectAfter = (ms) =>
     }, ms)
   })
 
+// FXIME: enzyme は New Context API に対応しておらず，テストコードが動かない #17
+// refs: https://github.com/airbnb/enzyme/issues/1553
 describe.skip('basic', () => {
   let options
   let initialState
@@ -366,7 +368,8 @@ describe.skip('onDataReady', () => {
     }
     initialState = { loaded: false }
     initialProps = {}
-    reducer = (state, action) => action.type === 'END_LOAD'
+    reducer = (state, action) =>
+      action.type === 'END_LOAD'
         ? { ...mockState1, loaded: true }
         : { ...state }
     onDispatched = expectCalled(
@@ -622,7 +625,8 @@ describe.skip('sendPageViewOnDidMount', () => {
   })
 
   it('(props, state)=>state.loaded, initialState.loaded = true', () => {
-    reducer = (state, action) => action.type === 'SET_LOADED'
+    reducer = (state, action) =>
+      action.type === 'SET_LOADED'
         ? { ...mockState1, loaded: action.payload }
         : { ...state }
     initialState = { loaded: true }
@@ -655,7 +659,8 @@ describe.skip('sendPageViewOnDidMount', () => {
   })
 
   it('(props, state)=>state.loaded, initialState.loaded = false', () => {
-    reducer = (state, action) => action.type === 'SET_LOADED'
+    reducer = (state, action) =>
+      action.type === 'SET_LOADED'
         ? { ...mockState1, loaded: action.payload }
         : { ...state }
     initialState = { loaded: false }

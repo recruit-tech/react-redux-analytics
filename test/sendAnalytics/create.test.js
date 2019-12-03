@@ -13,6 +13,8 @@ import MockComponent from '../_data/component'
 
 configure({ adapter: new Adapter() })
 
+// FXIME: enzyme は New Context API に対応しておらず，テストコードが動かない #17
+// refs: https://github.com/airbnb/enzyme/issues/1553
 describe.skip('default', () => {
   let Component
   let wrapper

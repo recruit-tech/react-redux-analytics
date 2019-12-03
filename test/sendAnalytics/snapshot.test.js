@@ -58,6 +58,8 @@ const resolveAfter = (ms) =>
     }, ms)
   })
 
+// FXIME: enzyme は New Context API に対応しておらず，テストコードが動かない #17
+// refs: https://github.com/airbnb/enzyme/issues/1553
 describe.skip('sendPageViewOnDidMount=true, sendPageViewOnDidUpdate=false', () => {
   let count
   let options
