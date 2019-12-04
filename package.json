@@ -60,7 +60,7 @@
     "chai": "^4.1.1",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.10.0",
-    "eslint": "^3.19.0",
+    "eslint": "^4.18.2",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-dependencies": "^2.3.0",
     "eslint-plugin-import": "^2.16.0",
